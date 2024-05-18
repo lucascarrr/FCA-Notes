@@ -47,29 +47,37 @@
 \maketitle
 
 \begin{center}   
-    \begin{tikzpicture}[scale=2.5]
-        % Define coordinates
-        \coordinate (A) at (0,0,0);
-        \coordinate (B) at (1,0,0);
-        \coordinate (C) at (0,1,0);
-        \coordinate (D) at (1,1,0);
-        \coordinate (E) at (0,0,1);
-        \coordinate (F) at (1,0,1);
-        \coordinate (G) at (0,1,1);
-        \coordinate (H) at (1,1,1);
-      
-        % Draw edges
-        \draw (A) -- (B) -- (D) -- (H) -- (G) -- (C) -- cycle;
-        \draw (A) -- (E) -- (F) -- (B);
-        \draw (E) -- (G);
-        \draw (F) -- (H);
-        \draw (D) -- (H);
-        \draw (C) -- (G);
-      
-        % Draw nodes
-        \foreach \point/\position in {A/left,B/below,C/left,D/right,E/left,F/below,G/left,H/right}
-          \node[fill,circle,inner sep=1.5pt,label={\position:$\point$}] at (\point) {};
-      \end{tikzpicture}
+    \begin{tikzpicture}[node distance=2cm]
+        \node (top) at (0,0) {$1$};
+
+        \node (a) at (-2,-2) {$a$};
+        \node (b) at (0, -2) {$b$};
+        \node (c) at (2, -2) {$c$};
+
+        \node (d) at (-2, -1) {$d$}; 
+        \node (e) at (0, -1) {$e$}; 
+        \node (f) at (2, -1) {$f$}; 
+
+        \node (bottom) at (0,-3) {$0$};
+
+        \draw (bottom) -- (a); 
+        \draw (bottom) -- (b); 
+        \draw (bottom) -- (c);
+        
+        \draw (a) -- (e); 
+        \draw (c) -- (e);
+
+        \draw (a) -- (d); 
+        \draw (b) -- (d);
+        
+        \draw (b) -- (f); 
+        \draw (c) -- (f);
+
+        \draw (d) -- (top); 
+        \draw (e) -- (top); 
+        \draw (f) -- (top);
+        
+    \end{tikzpicture}
 \end{center}
 
 \tableofcontents
