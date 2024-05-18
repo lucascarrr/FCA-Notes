@@ -1,0 +1,40 @@
+\section{Introduction}
+\label{sec:Introduction}
+\subsection{Lattices}
+\label{subsec:Introduction-Lattices}
+A lattice $\calC$ is a poset \st for any pair $(a,b) \in \calC$, the supremum $a \land b$, and infimum $a \lor b$ exist. We extend this to a complete lattice, which has the requirement that for any subset $\calD \subseteq \calC$ the supremum $\bigvee \calD$ and infimum $\bigwedge \calD$ exist. 
+
+\subsection{Formal Contexts}
+\label{subsec:Introduction-Formal_Contexts}
+A Formal Context is a triple $\langle G, M, I \rangle$ where $G$ refers to a set of objects, $M$ to a set of properties, and $I$ an incidence relation over $G\times M$. 
+
+We have derivation operators $A'$ and $B'$; for $A'$, where $A \subseteq G$, the derivation operator tells us which properties belong to the objects in $A$, the dual holds for properties and their objects. \textbf{Formally}, 
+
+\begin{definition}
+    \[ A' := \left\{m \in M \,|\, \forall g \in A, gIm\right\} \]
+    \[ B' := \left\{g \in G \,|\, \forall m \in B, gIm\right\} \]
+\end{definition}
+
+We also have closure operators, $A''$, which works intuitively by applying the derivation operator on $A$ ($B$), which yields a set of properties. Then applying it again on $A'$ ($B'$), which yields back a set of objects (properties). 
+
+\begin{proposition}
+    For subsets $A, B\subseteq G$ (defined dually for properties $C,D \subseteq M$), we have
+    \begin{itemize}
+        \item[a.] $A \subseteq B \implies B' \subseteq A'$ 
+        \item[b.] $A \subseteq A''$ 
+        \item[c.] $A' = A'''$
+    \end{itemize}
+\end{proposition}
+
+For more natural discussion, \textit{a} describes the behaviour that if we have two sets of objects $A$ and $B$, where $A \subseteq B$; then it follows that objects in $A$ will have at \textit{least} all the properties of objects in $B$. 
+
+\subsection{Formal Concepts}
+\label{sec:Introduction-Formal_Concepts}
+
+\textit{Presume we are working with a formal context $\langle G, M, I \rangle$.}
+\begin{definition}
+    
+    $(A,B)$ is a \textit{\textbf{formal concept}} of our formal context \textit{iff}    $A \subseteq G$, $B \subseteq M$, $A' = B$, and $B' = A$ 
+\end{definition}
+
+$A$ is called the \textbf{extent}, and $B$ is called the \textbf{intent}. We can refer to the set of all formal concepts of a formal context as a $\calB (G, M, I)$.

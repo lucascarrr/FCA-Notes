@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+
+% Packages for better typography and formatting
+\usepackage[utf8]{inputenc}  % Handle UTF-8 encoding
+\usepackage[T1]{fontenc}     % Better font encoding
+\usepackage{lmodern}         % Improved font
+\usepackage{microtype}       % Better spacing
+\usepackage{geometry}        % Adjust margins
+\usepackage{amsmath, amssymb} % Math symbols and formatting
+\usepackage{graphicx}        % Include graphics
+\usepackage{hyperref}        % Hyperlinks
+\usepackage{enumitem}        % Customizable lists
+\usepackage{xcolor}          % Color text
+\usepackage{tcolorbox}       % Colored boxes
+
+% Geometry settings for better note-taking space
+\geometry{
+  a4paper,
+  left=0.5in,
+  right=0.5in,
+  top=0.5in,
+  bottom=0.5in,
+}
+\usepackage[parfill]{parskip} % Use parskip package without extra space
+
+\input{macros.tex}
+% Custom commands for highlighting text
+\newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
+\newcommand{\important}[1]{\textcolor{red}{#1}}
+
+\title{Everything I know about [Formal Concept Analysis]}
+\author{Lucas Carr}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\include{Chapter1}
+
+\end{document}
