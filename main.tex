@@ -12,6 +12,10 @@
 \usepackage{enumitem}        % Customizable lists
 \usepackage{xcolor}          % Color text
 \usepackage{tcolorbox}       % Colored boxes
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage[parfill]{parskip} % Use parskip package without extra space
+\titlespacing*{\subsection}{0pt}{\subsecbeforeskip}{\subsecafterskip}
 
 % Geometry settings for better note-taking space
 \geometry{
@@ -21,14 +25,20 @@
   top=0.5in,
   bottom=0.5in,
 }
-\usepackage[parfill]{parskip} % Use parskip package without extra space
+
+% Define the lengths for before and after spacing
+\newlength{\subsecbeforeskip}
+\setlength{\subsecbeforeskip}{8ex}
+\newlength{\subsecafterskip}
+\setlength{\subsecafterskip}{1.5ex}
+
 
 \input{macros.tex}
 % Custom commands for highlighting text
 \newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
 \newcommand{\important}[1]{\textcolor{red}{#1}}
 
-\title{Everything I know about [Formal Concept Analysis]}
+\title{Everything I know so far about [Formal Concept Analysis]}
 \author{Lucas Carr}
 \date{\today}
 
@@ -36,9 +46,34 @@
 
 \maketitle
 
+\begin{center}   
+    \begin{tikzpicture}[scale=2.5]
+        % Define coordinates
+        \coordinate (A) at (0,0,0);
+        \coordinate (B) at (1,0,0);
+        \coordinate (C) at (0,1,0);
+        \coordinate (D) at (1,1,0);
+        \coordinate (E) at (0,0,1);
+        \coordinate (F) at (1,0,1);
+        \coordinate (G) at (0,1,1);
+        \coordinate (H) at (1,1,1);
+      
+        % Draw edges
+        \draw (A) -- (B) -- (D) -- (H) -- (G) -- (C) -- cycle;
+        \draw (A) -- (E) -- (F) -- (B);
+        \draw (E) -- (G);
+        \draw (F) -- (H);
+        \draw (D) -- (H);
+        \draw (C) -- (G);
+      
+        % Draw nodes
+        \foreach \point/\position in {A/left,B/below,C/left,D/right,E/left,F/below,G/left,H/right}
+          \node[fill,circle,inner sep=1.5pt,label={\position:$\point$}] at (\point) {};
+      \end{tikzpicture}
+\end{center}
+
 \tableofcontents
 \newpage
-
 \include{Chapter1}
 
 \end{document}

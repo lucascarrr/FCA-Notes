@@ -4,6 +4,49 @@
 \label{subsec:Introduction-Lattices}
 A lattice $\calC$ is a poset \st for any pair $(a,b) \in \calC$, the supremum $a \land b$, and infimum $a \lor b$ exist. We extend this to a complete lattice, which has the requirement that for any subset $\calD \subseteq \calC$ the supremum $\bigvee \calD$ and infimum $\bigwedge \calD$ exist. 
 
+\subsubsection{Supremum and infimum} 
+\label{subsubsec:Introduction-Lattices-Supremum_and_Infimum}
+The supremum of two elements is defined as the \textit{least upper bound} of those two elements. We can obviously extend this over more than two elements. Given the set $S = \{1,2,3,4,5\}$, where $S \subset \mathbb{N}$. The supremum, $\bigvee S = 5$; similarly, the infimum $\bigwedge S = 1$.  
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=1cm]
+        \node (top) at (0,2) {$1$};
+        \node (a) at (-1,0) {$a$};
+        \node (b) at (1,0) {$b$};
+        \node (c) at (1, -1) {$c$};
+        \node (d) at (-1, -1) {$d$};
+        \node (bottom) at (0,-3) {$0$};
+        
+        \draw (top) -- (a);
+        \draw (top) -- (b);
+        \draw (a) -- (c);
+        \draw (b) -- (c);
+        \draw (a) -- (d);
+        \draw (c) -- (bottom);
+        \draw (d) -- (bottom);
+    \end{tikzpicture}
+    \caption{$d \lor c = a$, $b\land a = c$}
+    \label{fig:Demostration of Supremum and Infimum in Lattices }
+\end{figure}
+
+When we are talking about lattices (or Hasse diagrams in general), we can refer to the supremum and infimum as the \textit{meet} and \textit{join}. Refer to \ref{subsec:Introduction-The_Basic_Theorem} for more pertinent discusison regarding lattices.
+
+We also have infimum (supremum) satisfying the following 
+\begin{itemize}
+    \item $x \land y = y \lor x$ (commutativity) 
+    \item $x \lor (y \lor z) = (x \lor y) \lor z$ (associativity)
+    \item $x \lor x$ (idempotency - but arguably, reflexivity)
+\end{itemize}
+
+We use these later on to show that any finite lattice is a complete lattice. 
+
+There are also the following interesting properties: 
+\begin{itemize}
+    \item $a \lor 0 = a$ 
+    \item $a \leq b \implies a \lor b = b$\footnote{This is useful because it enables to move from orders (posets) to lattices}
+\end{itemize}
+
 \subsection{Formal Contexts}
 \label{subsec:Introduction-Formal_Contexts}
 A Formal Context is a triple $\langle G, M, I \rangle$ where $G$ refers to a set of objects, $M$ to a set of properties, and $I$ an incidence relation over $G\times M$. 
@@ -29,7 +72,7 @@ We also have closure operators, $A''$, which works intuitively by applying the d
 For more natural discussion, \textit{a} describes the behaviour that if we have two sets of objects $A$ and $B$, where $A \subseteq B$; then it follows that objects in $A$ will have at \textit{least} all the properties of objects in $B$. 
 
 \subsection{Formal Concepts}
-\label{sec:Introduction-Formal_Concepts}
+\label{subsec:Introduction-Formal_Concepts}
 
 \textit{Presume we are working with a formal context $\langle G, M, I \rangle$.}
 \begin{definition}
@@ -38,3 +81,24 @@ For more natural discussion, \textit{a} describes the behaviour that if we have 
 \end{definition}
 
 $A$ is called the \textbf{extent}, and $B$ is called the \textbf{intent}. We can refer to the set of all formal concepts of a formal context as a $\calB (G, M, I)$.
+
+\subsection{Concept Hierarchies}
+\label{subsec:Introduction-Concept_Hierarchies}
+
+When we think about concepts, we typically think of them in a structure (something like a taxonomy, or ontology). That is, we think of \textit{sub} and \textit{super} concepts. For example, Dog is a subconcept of Mammal; and so is Cat. However, Dog and Cat are not sub nor superconcepts of one another (so, in some sense we have a partial order here). Formal Concepts have the same idea. 
+
+\begin{definition}
+    Let $(A_1, B_1)$ and $(A_2, B_2)$ be formal concepts of some $\calB(G,M,I)$. We say that $(A_1,B_1)$ is a \textbf{subconcept} of $(A_2,B_2)$ (equivalently, $(A_2,B_2)$ is a \textbf{superconcept} of $(A_1, B_1)$) and use the $\leq$ sign to express this. Thus we have 
+    
+    \[(A_1, B_1)\leq (A_2, B_2) :\iff A_1 \subseteq A_2 \space (\iff B_2 \subseteq B_1).\]
+\end{definition}
+
+\subsection{The Basic Theorem}
+\label{subsec:Introduction-The_Basic_Theorem}
+The first part of the Basic Theorem tells us that given some formal concept $(G,M,I)$, the concept lattice of $\calB(G,M,I)$ is a complete lattice. So, constructing a lattice from a formal context, will always result in a complete lattice. 
+
+\textbf{From $\calB(G,M,I)$}, let $\{(A_t, B_t) | t\in T\} \subseteq \calB (G,M,I)$ be some arbitrary subset of formal concepts. We can then define the supremum and infimum of this subset as: 
+\[ \bigvee_{t\in T} (A_t, B_t) := \Big( (\bigcup_{t\in T} A_t)'', (\bigcap_{t\in T}B_t) \Big)\] 
+\[ \bigwedge_{t\in T} (A_t, B_t) := \Big( (\bigcap_{t\in T} A_t), (\bigcup_{t\in T}B_t)'' \Big)\] 
+
+Now, we want to show that there is some complete lattice $\mathcal{V}$ that is isomorphic to the concept lattice given by $\calB(G,M,I)$. 
