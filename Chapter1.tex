@@ -95,10 +95,120 @@ When we think about concepts, we typically think of them in a structure (somethi
 
 \subsection{The Basic Theorem}
 \label{subsec:Introduction-The_Basic_Theorem}
+\subsubsection{I} 
+\label{subsec:Introduction-The_basic_Theorem-I}
 The first part of the Basic Theorem tells us that given some formal concept $(G,M,I)$, the concept lattice of $\calB(G,M,I)$ is a complete lattice. So, constructing a lattice from a formal context, will always result in a complete lattice. 
 
 \textbf{From $\calB(G,M,I)$}, let $\{(A_t, B_t) | t\in T\} \subseteq \calB (G,M,I)$ be some arbitrary subset of formal concepts. We can then define the supremum and infimum of this subset as: 
 \[ \bigvee_{t\in T} (A_t, B_t) := \Big( (\bigcup_{t\in T} A_t)'', (\bigcap_{t\in T}B_t) \Big)\] 
 \[ \bigwedge_{t\in T} (A_t, B_t) := \Big( (\bigcap_{t\in T} A_t), (\bigcup_{t\in T}B_t)'' \Big)\] 
 
-Now, we want to show that there is some complete lattice $\mathcal{V}$ that is isomorphic to the concept lattice given by $\calB(G,M,I)$. 
+Now, we want to show that there is some complete lattice $\mathcal{V}$ that is isomorphic to the concept lattice given by $\calB(G,M,I)$.
+\begin{center}
+    \begin{tabular}{c|cccccc}
+        & Fur & Feathers & Scales & Lives on Land & Lays Eggs & Cold-Blooded \\ \hline
+        Mammals     & $\times$   &       &         &  $\times$ & &          \\
+        Birds       &     & $\times$     &         & $\times$   & $\times$ &          \\
+        Reptiles    &     &       & $\times$       & $\times$   & $\times$ & $\times$        \\
+        Amphibians  &     &       & $\times$       & $\times$   & $\times$ & $\times$        \\
+        Fish        &     &       & $\times$       &     &   & $\times$        \\
+    \end{tabular}
+\end{center}
+
+Suppose we are interested in Mammals and Birds, $\{Mammals\}' = \{Fur, Lives on Land\}$; $\{Mammals\}'' = \{Mammals\}$. $\{Birds\}' = \{Feathers, Lives on Land, Lays Eggs\}; \{Birds\}'' = \{Birds\}$.
+
+Using the basic theorem from above, we can determine the supremum and infimum of our set of concepts. We have the set of concepts from above, lets call this $ S := (A_t, B_t$. We can calculate $\bigvee S$ by 
+\[\Big(\bigcup_{t\in T} A_t)'', \bigcap_{t\in T} B_t\Big)\] 
+\[\Big(\{Mammals, Birds\}'', \{Lives on Land\} \Big)\] 
+\[\Big( \{Mammals, Birds, Amphibians, Reptiles\}, \{Lives on Land\}\Big)\] 
+
+Dually, we can find the infimum $\bigwedge S$, given as: (which is the bottom element) 
+\[\Big(\bigcap_{t\in T}A_t, (\bigcup_{t\in T}B_t)'' \Big) \]
+\[\Big(\emptyset, (\{Fur, Feathers, Lives on Land, Lays Eggs\})\Big) \]
+\[\Big(\emptyset, \emptyset \Big) \]
+
+The first part of the Basic Theorem, which we have just gone through, shows that for the concept lattice of a given formal context, $\calB (G,M,I)$, we have an infimum and supremum for any arbitrary subset of concepts. This is just our definition of a complete lattice - so we have that any formal context has a complete lattice. 
+
+\subsubsection{II} 
+\label{subsec:Introduction-The_basic_Theorem-II}
+The second part of the basic theorem tells us that every complete lattice is \textit{isomorphic} to a concept lattice. That is, given a complete lattice $(\mathcal{L}, \leq)$, we can find some $\calB (G,M,I)$ that is isomorphic to $\mathcal{L}$. 
+
+\begin{example}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[node distance=4cm]
+            \node (top) at (0,2) {$\{1,2,3,4\}$};
+            \node (a) at (-3,0) {$\{1,2,3\}$};
+            \node (b) at (-1,0) {$\{1,2,4\}$};
+            \node (c) at (1,0) {$\{1,3,4\}$};
+            \node (d) at (3,0) {$\{2,3,4\}$};
+
+            \node (e) at (-5, -2) {$\{1,2\}$};
+            \node (f) at (-3, -2) {$\{1,3\}$};
+            \node (g) at (1, -2) {$\{1,4\}$};
+            \node (h) at (-1, -2) {$\{2,3\}$};
+            \node (i) at (3, -2) {$\{2,4\}$};
+            \node (j) at (5, -2) {$\{3,4\}$};
+
+            \node (k) at (-3, -4) {$\{1\}$};
+            \node (l) at (-1, -4) {$\{2\}$};
+            \node (m) at (1, -4) {$\{3\}$};
+            \node (n) at (3, -4) {$\{4\}$};
+
+            \node (bottom) at (0,-6) {$0$};
+
+            \draw (top) -- (a);
+            \draw (top) -- (b);
+            \draw (top) -- (c);
+            \draw (top) -- (d);
+            \draw (e) -- (a);
+            \draw (e) -- (b); 
+            \draw (f) -- (a); 
+            \draw (f) -- (c); 
+            \draw (g) -- (b); 
+            \draw (g) -- (c); 
+            \draw (h) -- (a); 
+            \draw (h) -- (d);
+            \draw (i) -- (b); 
+            \draw (i) -- (d); 
+            \draw (j) -- (c); 
+            \draw (j) -- (d);
+            \draw (k) -- (e); 
+            \draw (k) -- (f); 
+            \draw (k) -- (g); 
+            \draw (l) -- (e); 
+            \draw (l) -- (h); 
+            \draw (l) -- (i); 
+            \draw (m) -- (f); 
+            \draw (m) -- (h);
+            \draw (m) -- (j);
+            \draw (n) -- (g);
+            \draw (n) -- (i); 
+            \draw (n) -- (j);
+            \draw (k) -- (bottom);
+            \draw (l) -- (bottom);
+            \draw (m) -- (bottom);
+            \draw (n) -- (bottom);
+        \end{tikzpicture}
+        \caption{Example of a complete lattice of ($\{1,2,3,4\}, \subseteq$)}
+        \label{fig:Demostration of Supremum and Infimum in Lattices }
+    \end{figure}
+\end{example}
+
+This is a complete lattice (it is finite, so it is complete); we can find a relatively simply formal context, which is isomorphic to the lattice: we need two sets, the set of supremum-irreducible elements, and the set of infimum-irreducible elements. For small lattices, we can do this via inspection - the supremum-irreducible (infimum-irreduclbe) elements are those which which only have a single line below (above) the element. 
+
+Thus, our supremum-irreducible set is $\{1,2,3,4\}$; 
+
+and our infimum-irreducible set is $\{\{1,2,3\}, \{1,2,4\}, \{1,3,4\}, \{2,3,4\}\}$. The supremum-irreducible set represents the objects, and infimum-irreducible set represents the properties. The reason for this is inuitive: we start bottom-up with our maximally sub-concepts (remember, the distinction between properties and objects is a modelling problem), these basic elements are the ones which supremum-irreducble, i.e. they cannot be written as a super-concept of some other elements. Conversely, our infimum-irreducible elements are the most general (other than $\top$) elements of our lattice, they cannot be written as the sub-concepts of elements.\footnote{We can of course write a  infimum-irreducible element $e$ as $e \lor \top$, but this is not useful.} 
+
+\begin{table}[h]
+    \centering
+    \caption{The formal context for \ref{fig:Demostration of Supremum and Infimum in Lattices }}
+    \begin{tabular}{c|cccc} 
+        & $\{1,2,3\}$ & $\{1,2,4\}$ & $\{1,3,4\}$ & $\{2,3,4\}$ \\ \hline
+        $1$ & $\times$ & $\times$ & $\times$ & \\ 
+        $2$ & $\times$ & $\times$ & & $\times$ \\ 
+        $3$ & $\times$ & & $\times$ & $\times$ \\ 
+        $4$ & & $\times$ & $\times$ & $\times$   
+    \end{tabular}
+\end{table}
