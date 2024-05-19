@@ -1,0 +1,17 @@
+\section{Closure Systems}
+\label{sec:Closure_Systems}
+
+\subsection{Defining a Closure System}
+\label{subsec:Closure_Systems-Defining_a_Closure_System}
+
+If we are given a set $M$, a closure system $\calC$ on $M$ is a set of subsets of $M$ ($\calC \subseteq \mathcal{P}(M)$) for which: 
+
+\begin{itemize}
+    \item $M \in \calC$
+    \item if $D\subseteq \calC$ then, $\bigcap D \in \calC$
+\end{itemize}
+
+We might observe that the first point is ensured by the second point; this is because $\bigcap \emptyset = M$ - if we don't have this property, we have a contradiction. We might also observe that a closure system has a natural ordering; specifically, by subsumption. That is, $\calC$ is a poset with $(\calC, \subseteq)$. 
+
+\subsection{Closure Operators}
+\label{subsec:Closure_Systems-Closure_Operators}

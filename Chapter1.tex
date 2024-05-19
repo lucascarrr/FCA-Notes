@@ -195,11 +195,13 @@ The second part of the basic theorem tells us that every complete lattice is \te
     \end{figure}
 \end{example}
 
-This is a complete lattice (it is finite, so it is complete); we can find a relatively simply formal context, which is isomorphic to the lattice: we need two sets, the set of supremum-irreducible elements, and the set of infimum-irreducible elements. For small lattices, we can do this via inspection - the supremum-irreducible (infimum-irreduclbe) elements are those which which only have a single line below (above) the element. 
+This is a complete lattice (it is finite, so it is complete); we can find a relatively simply formal context, which is isomorphic to the lattice: we need two sets, the set of supremum-irreducible elements, and the set of infimum-irreducible elements. For small lattices, we can do this via inspection - the supremum-irreducible (infimum-irreducible) elements are those which which only have a single line below (above) the element. 
 
 Thus, our supremum-irreducible set is $\{1,2,3,4\}$; 
 
-and our infimum-irreducible set is $\{\{1,2,3\}, \{1,2,4\}, \{1,3,4\}, \{2,3,4\}\}$. The supremum-irreducible set represents the objects, and infimum-irreducible set represents the properties. The reason for this is inuitive: we start bottom-up with our maximally sub-concepts (remember, the distinction between properties and objects is a modelling problem), these basic elements are the ones which supremum-irreducble, i.e. they cannot be written as a super-concept of some other elements. Conversely, our infimum-irreducible elements are the most general (other than $\top$) elements of our lattice, they cannot be written as the sub-concepts of elements.\footnote{We can of course write a  infimum-irreducible element $e$ as $e \lor \top$, but this is not useful.} 
+and our infimum-irreducible set is $\{\{1,2,3\}, \{1,2,4\}, \{1,3,4\}, \{2,3,4\}\}$. 
+
+The supremum-irreducible set represents the objects, and infimum-irreducible set represents the properties. The reason for this is inuitive: we start bottom-up with our maximally sub-concepts (remember, the distinction between properties and objects is a modelling problem), these basic elements are the ones which supremum-irreducible, i.e. they cannot be written as a super-concept of some other elements. Conversely, our infimum-irreducible elements are the most general (other than $\top$) elements of our lattice, they cannot be written as the sub-concepts of elements.\footnote{We can of course write a  infimum-irreducible element $e$ as $e \lor \top$, but this is not useful.} 
 
 \begin{table}[h]
     \centering
@@ -212,3 +214,5 @@ and our infimum-irreducible set is $\{\{1,2,3\}, \{1,2,4\}, \{1,3,4\}, \{2,3,4\}
         $4$ & & $\times$ & $\times$ & $\times$   
     \end{tabular}
 \end{table}
+
+\textbf{[How do we determine the supremum(infimum)-irreducible sets without inspection?]} 
