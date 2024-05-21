@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+
+% Packages for better typography and formatting
+\usepackage[utf8]{inputenc}  % Handle UTF-8 encoding
+\usepackage[T1]{fontenc}     % Better font encoding
+\usepackage{lmodern}         % Improved font
+\usepackage{microtype}       % Better spacing
+\usepackage{geometry}        % Adjust margins
+\usepackage{amsmath, amssymb} % Math symbols and formatting
+\usepackage{graphicx}        % Include graphics
+\usepackage{hyperref}        % Hyperlinks
+\usepackage{enumitem}        % Customizable lists
+\usepackage{xcolor}          % Color text
+\usepackage{tcolorbox}       % Colored boxes
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage[parfill]{parskip} % Use parskip package without extra space
+\titlespacing*{\subsection}{0pt}{\subsecbeforeskip}{\subsecafterskip}
+
+% Geometry settings for better note-taking space
+\geometry{
+  a4paper,
+  left=0.5in,
+  right=0.5in,
+  top=0.5in,
+  bottom=0.5in,
+}
+
+% Define the lengths for before and after spacing
+\newlength{\subsecbeforeskip}
+\setlength{\subsecbeforeskip}{8ex}
+\newlength{\subsecafterskip}
+\setlength{\subsecafterskip}{1.5ex}
+
+
+\input{macros.tex}
+% Custom commands for highlighting text
+\newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
+\newcommand{\important}[1]{\textcolor{red}{#1}}
+
+\title{Everything I know so far about [Formal Concept Analysis]}
+\author{Lucas Carr}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}   
+    \begin{tikzpicture}[node distance=2cm]
+        \node (top) at (0,0) {$1$};
+
+        \node (a) at (-2,-2) {$a$};
+        \node (b) at (0, -2) {$b$};
+        \node (c) at (2, -2) {$c$};
+
+        \node (d) at (-2, -1) {$d$}; 
+        \node (e) at (0, -1) {$e$}; 
+        \node (f) at (2, -1) {$f$}; 
+
+        \node (bottom) at (0,-3) {$0$};
+
+        \draw (bottom) -- (a); 
+        \draw (bottom) -- (b); 
+        \draw (bottom) -- (c);
+        
+        \draw (a) -- (e); 
+        \draw (c) -- (e);
+
+        \draw (a) -- (d); 
+        \draw (b) -- (d);
+        
+        \draw (b) -- (f); 
+        \draw (c) -- (f);
+
+        \draw (d) -- (top); 
+        \draw (e) -- (top); 
+        \draw (f) -- (top);
+        
+    \end{tikzpicture}
+\end{center}
+
+\tableofcontents
+\newpage
+\include{Chapter1}
+\include{Chapter2}
+\include{Chapter3}
+\end{document}

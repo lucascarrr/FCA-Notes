@@ -1,0 +1,18 @@
+\section{Implications}
+\label{sec:Implications}
+
+\subsection{Precursor} 
+An implication $A \rightarrow B$ holds in a formal context $(G,M,I)$ if 
+\begin{enumerate}
+    \item $\forall g\in G, g' \models A\rightarrow B$
+    \item $A \rightarrow B \iff B \subseteq A''$ 
+    \item $A \rightarrow B \iff A' \subseteq B'$ 
+\end{enumerate}
+
+(1) is obvious.
+
+Looking at (2), we need to show that given $A \rightarrow B$, then $B \subseteq A''$. $A'$ gives us the set of objects $\st \forall g \in A', A \subseteq g'$. $A''$ gives us the set of all properties these objects share. Since $A \rightarrow B$, and every object in $A'$ has $A$, then every object in $A''$ should have $B$. Thus, $B \subseteq A''$.   
+
+In the other direction, suppose we have that $B \subseteq A''$, then we have either that $B \subseteq A$, in which case clearly $A \rightarrow B$. Or, we have that $\forall g \in A', g' \models A \rightarrow B$ 
+
+For (3), if $A \rightarrow B$ then every object in $A'$ must also have $B$ in its attributes. And so, the objects described by $A'$ are at at most those described by $B'$. 
