@@ -1,18 +1,98 @@
 \section{Implications}
 \label{sec:Implications}
 
-\subsection{Precursor} 
-An implication $A \rightarrow B$ holds in a formal context $(G,M,I)$ if 
+\subsection{Introduction}
+If $M$ is a set of attributes, we say that $A \rightarrow B$ is an implication over $M$; $A,B \subseteq M$. A set $D\subseteq M$ respects an implication $A \rightarrow B$ if i) $A \not \subseteq D$ or ii) $B \subseteq D$ - the same as material implication. We can represent this notion as $D \models A \rightarrow B$. 
+
+If we have a set of implications $L := \{I_1,\dots ,I_n\}$ we say that a subset $D \models L$ if it respects every implication in $L$: formally, $D \models L \iff \forall A \rightarrow B \in L, D \models A \rightarrow B$. 
+
+\subsubsection{Implications in a Formal Context}
+Suppose we have a formal context $\mathcal{K} := (G, M, I)$ and $A \rightarrow B$ where  $A, B \subseteq M$. We say that $K \models A \rightarrow B$ if $\forall g \in G, g' \models A \rightarrow B$. That is, a formal context is a model of some implication, if every object in $G$ has a intent which is a model of that implication. 
+
+Given $K \models A \rightarrow B$, the following are equivalent: 
+\[1. \forall g \in G, g' \models A\rightarrow B \]
+\[2. B \subseteq A''\]
+\[3. A' \subseteq B'\]
+
+(1) is obvious. 
+
+For (2), we need to show $K \models A \rightarrow B \iff B \subseteq A''$. 
+
+$\Rightarrow$ We want to show that $\forall g \in G, g' \models A \rightarrow B \implies B \subseteq A''$ 
 \begin{enumerate}
-    \item $\forall g\in G, g' \models A\rightarrow B$
-    \item $A \rightarrow B \iff B \subseteq A''$ 
-    \item $A \rightarrow B \iff A' \subseteq B'$ 
+    \item Every object which has $A$ in its intent, also has $B$ in its intent. 
+    \item This means, $\forall g \in G, A \subseteq g', B \subseteq g'$
+    \item So $B$ is a subset of every object intent in $G$. 
+    \item Thus, $B \subseteq A''$. 
 \end{enumerate}
 
-(1) is obvious.
+$\Leftarrow$ Show that $B \subseteq A'' \implies \forall g \in G, g' \models A \rightarrow B$. 
+\begin{enumerate}
+    \item $A'''$ is the set of objects which have $A$ in their intents
+    \item We know that all of these objects will have $B$ in their intents too (assumption)
+    \item So, $\forall g \in G$ if $g\in A'''$ then $B \in g'$ and so $g' \models A \rightarrow B$. 
+    \item $\forall g \in G$ and $g \not \in A'''$, then $g' \models A \rightarrow B$ trivially. 
+    \item $\forall g \in G, g' \models A \rightarrow B$
+\end{enumerate}
 
-Looking at (2), we need to show that given $A \rightarrow B$, then $B \subseteq A''$. $A'$ gives us the set of objects $\st \forall g \in A', A \subseteq g'$. $A''$ gives us the set of all properties these objects share. Since $A \rightarrow B$, and every object in $A'$ has $A$, then every object in $A''$ should have $B$. Thus, $B \subseteq A''$.   
+[We still need to do proof for (3)] 
+\clearpage
 
-In the other direction, suppose we have that $B \subseteq A''$, then we have either that $B \subseteq A$, in which case clearly $A \rightarrow B$. Or, we have that $\forall g \in A', g' \models A \rightarrow B$ 
+\subsection{Sets of Implications}
+Let $L$ be a set of implications over $M$, then 
+\[Mod(L) := \{T \in \mathcal{P}(M) | T \models L\}\]
+$Mod(L)$ is the set of all subsets of $M$ which are models of the set of implications $L$. This is a closure system on $M$. We can see that $M \in Mod(L)$ because for any implication $A \rightarrow B$ over $M$, $M \models A\rightarrow B$. 
+\begin{proof}
+    $M \models A\rightarrow B$ for any implication over $M$ with $A, B \subseteq M$. 
+    \begin{enumerate}
+        \item Let $A\rightarrow B$ be some implication over $M$. 
+        \item Suppose $M \not \models A \rightarrow B$. 
+        \item Then $A \subseteq M$ and $B \not \subseteq M$ 
+        \item Contradiction, since $A, B \subseteq M$
+    \end{enumerate}
+\end{proof}
+\begin{proof}
+    The intersection of any elements in $Mod(L)$ is also in $Mod(L)$. 
+    \begin{enumerate}
+        \item Let $X, Y \in Mod(L)$, 
+        \item Assume $X \cap Y \not \in Mod(L)$, 
+        \item Then, for some $A\rightarrow B \in L, X \cap Y \not \models A \rightarrow B$, 
+        \item $X \cap Y \subseteq A$ and $X \cap Y \not \subseteq B$. 
+        \item But $Mod(L)$ is such that $\forall m \in Mod(L), A \subseteq m \implies B \subseteq m$. 
+        \item If $X \cap Y \subseteq A$ then $X \cap Y \subseteq B$. 
+        \item Thus, $X \cap Y \in Mod(L)$
+    \end{enumerate}
+\end{proof}
 
-For (3), if $A \rightarrow B$ then every object in $A'$ must also have $B$ in its attributes. And so, the objects described by $A'$ are at at most those described by $B'$. 
+The above proves that $Mod(L)$ is a closure system on $M$. (From the definition in \ref{sec:Closure_Systems}) If L is the set of all implications of a formal context, then $Mod(L)$ is the system of all concept intents. 
+
+Since $Mod(L)$ is a closure system, we have a closure operator $X \mapsto L(X)$, which can be described in two ways. 
+
+$X^\mathcal{L} := X \cup \bigcup\{B | A \rightarrow B \in \mathcal{L}, A \subseteq X\}$. 
+
+We then keep applying $X^\mathcal{L}$ until we get a fixed point $\mathcal{L}(X) := X^{\mathcal{L}\dots \mathcal{L}}$ with $\mathcal{L}(X)^\mathcal{L} = \mathcal{L}(X)$. 
+
+Alternatively, we define the closure operator as $\mathcal{L}(X) := \bigcap\{Y | X \subseteq Y \subseteq M, Y \in Mod(L)\}$ 
+
+These two definitions are equivalent; the first one is an iterative definition, which says: given a subset of $M$, $X$ - keep applying all the implications from $\mathcal{L}$ until we reach a fixed point. The second definition says that we define the closure of $X$ as the intersection between all the models of $\mathcal{L}$ which contain $X$. 
+\clearpage
+
+\subsection{When does an implication follow from other ones?}
+Let $\mathcal{L}$ be a set of implications, and $A\rightarrow B$ an implication over $M$. How do we know if $\mathcal{L} \models A\rightarrow B$. Or, how do we know if an implication follows semantically from a set of implications? If every subset of $\mathcal{L}$ which respects $\mathcal{L}$ also respects $A\rightarrow B$. 
+
+\begin{proof}
+    $\mathcal{L} \models A\rightarrow B \iff B \in \mathcal{L}(A)$
+
+    $\mathcal{L} \models A\rightarrow B \Rightarrow B \in \mathcal{L}(A)$
+    \begin{enumerate}
+        \item Assume $B \not \in \mathcal{L}(A)$
+        \item Then, $\exists Y \in Mod(\mathcal{L})$ \st $A \subset Y$ and $B \not \subseteq Y$.
+        \item $Y \not \models A \rightarrow B$ and $Y \in Mod(\mathcal{L})$
+        \item Contradiction, since $\mathcal{L} \models A\rightarrow B$
+    \end{enumerate}
+
+    $B \in \mathcal{L}(A) \Rightarrow \mathcal{L} \models A\rightarrow B$
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{proof}
