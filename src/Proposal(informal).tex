@@ -88,9 +88,7 @@ From Figure~\ref{Figure:Initial Defeasible Formal Context}, if we take the oo-op
 
 \textbf{extensive:} $X \subseteq \DCl{X}$
 
-
-
-Assume that $\DCl{\cdot}$ is not extensive, so for some $X \subseteq M, X \not \subseteq \DCl{X}$. This means that there is some minimal set of objects, $\underlinesymbol{X}^\circ$, such that $\{m\in M | \forall g \in \underlinesymbol{X}^\circ, gIm \}$. Thus, we would have $X \not \subseteq \DCl{X}$. However, we know from construction that $\forall g \in \underlinesymbol{X}^\circ$,  
+Assume that $\DCl{\cdot}$ is not extensive; then, there exists some $X \not \subseteq \DCl{X}$. Let $Y\subseteq G$ such that $Y = \underlinesymbol{X}^\circ$. Then $\underlinesymbol{Y}^\circ$ is the set of properties shared by all minimal objects in $Y$ (this minimal requirement is redundant since all elements of $Y$ are minimal by construction). Observe that $\underlinesymbol{Y}^\circ \equiv \DCl{X}$. Since $X \not \subseteq \DCl{X}$, there must be some $y\in Y$ such that $y^\circ \cap X \not = X$. That is, there is some object in $Y$ which does not have all the attributes from $X$. However, this is a contradiction, since $y$ would not be in $Y$ since it is not the case that $\forall m \in X, yIm$ - which is our definition of $(\underlinesymbol{\cdot}^\circ)$. 
 
 
 \textbf{idempotent:} $\DCl{A} = \DCl{\DCl{A}}$
