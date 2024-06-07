@@ -81,18 +81,21 @@ These two definitions are equivalent; the first one is an iterative definition, 
 Let $\mathcal{L}$ be a set of implications, and $A\rightarrow B$ an implication over $M$. How do we know if $\mathcal{L} \models A\rightarrow B$. Or, how do we know if an implication follows semantically from a set of implications? If every subset of $\mathcal{L}$ which respects $\mathcal{L}$ also respects $A\rightarrow B$. 
 
 \begin{proof}
-    $\mathcal{L} \models A\rightarrow B \iff B \in \mathcal{L}(A)$
+    $\mathcal{L} \models A\rightarrow B \iff B \subseteq \mathcal{L}(A)$
 
-    $\mathcal{L} \models A\rightarrow B \Rightarrow B \in \mathcal{L}(A)$
+    $\mathcal{L} \models A\rightarrow B \Rightarrow B \subseteq \mathcal{L}(A)$
     \begin{enumerate}
-        \item Assume $B \not \in \mathcal{L}(A)$
+        \item Assume $B \not \subseteq \mathcal{L}(A)$
         \item Then, $\exists Y \in Mod(\mathcal{L})$ \st $A \subset Y$ and $B \not \subseteq Y$.
         \item $Y \not \models A \rightarrow B$ and $Y \in Mod(\mathcal{L})$
         \item Contradiction, since $\mathcal{L} \models A\rightarrow B$
     \end{enumerate}
 
-    $B \in \mathcal{L}(A) \Rightarrow \mathcal{L} \models A\rightarrow B$
+    $B \subseteq \mathcal{L}(A) \Rightarrow \mathcal{L} \models A\rightarrow B$ by contrapositive.
     \begin{enumerate}
-        \item 
+        \item Assume $\mathcal{L} \not \models A \rightarrow B$ 
+        \item Then, there exists some element $I \in Mod(\mathcal{L})$ with $A\subseteq I$ and $B \not \subseteq I$. 
+        \item By inspection, $I \in \{Y | A \subseteq Y \subseteq M, Y \in Mod(\mathcal{L})\}$
+        \item Which would then mean that $B \not \subseteq \bigcap \{Y | A \subseteq Y \subseteq M, Y \in Mod(\mathcal{L})\}$ 
     \end{enumerate}
 \end{proof}

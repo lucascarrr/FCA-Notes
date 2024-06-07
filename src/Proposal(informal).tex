@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+
+% Packages for better typography and formatting
+\usepackage[utf8]{inputenc}  % Handle UTF-8 encoding
+\usepackage[T1]{fontenc}     % Better font encoding
+\usepackage{lmodern}         % Improved font
+\usepackage{microtype}       % Better spacing
+\usepackage{geometry}        % Adjust margins
+\usepackage{amsmath, amssymb} % Math symbols and formatting
+\usepackage{graphicx}        % Include graphics
+\usepackage{hyperref}        % Hyperlinks
+\usepackage{enumitem}        % Customizable lists
+\usepackage{xcolor}          % Color text
+\usepackage{tcolorbox}       % Colored boxes
+\usepackage{accents}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage[parfill]{parskip} % Use parskip package without extra space
+
+\input{macros.tex}
+% Geometry settings for better note-taking space
+\geometry{
+  a4paper,
+  left=0.5in,
+  right=0.5in,
+  top=0.5in,
+  bottom=0.5in,
+}
+\title{Towards a Notion of Defeasibility in Formal Concept Analysis}
+\author{Lucas Carr}
+\date{06.06.24}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\section{The Initial Case}
+\subsection{A Defeasible Formal Context} 
+We define a defeasible formal context a $\K := (G,M,I,<)$ where $G$ is a set of objects, $M$ a set of attributes, $I$ an incidence relation on $G \times M$ expressed as $gIm$ for $g\in G, m\in M$ (exactly as we see with typical formal contexts); and, $<$ a strict partial order over $G$. 
+
+\subsection{The Derivation Operators}
+Over the defeasible formal context $\K = (G,M,I,<)$ we introduce two operators; $(\underlinesymbol{X}^\circ)$ and $\DCl{X}$, $X\subseteq M$. Before we define these operators, we introduce a definition of minimality over objects in $G$. 
+
+\begin{align}
+  Min(A) := \{g \in A | \nexists h \in A, h < g\} 
+\end{align}
+
+We can now define the respective operators, $A \subseteq G, B\subseteq M$. 
+
+\begin{align}
+  \underlinesymbol{A}^\circ &:= \{m \in M | \forall g \in Min(A), gIm\} \\ 
+  \underlinesymbol{B}^\circ &:= \{g \in G | \forall m \in B, \nexists h \in G h < g, gIm  \}
+\end{align}
+
+(1) Describes the minimally ranked objects in $G$. From here, (2) describes an operation from a set of objects $A \subseteq G$ to the attributes shared by the minimal elements in $A$. (3) Is an operation from a set of attributes $B\subseteq M$ which results in the \textit{minimal} set of objects which have all the attributes in $B$. 
+
+We can apply these operators twice, $\DCl{B}$ where $A\subseteq M$; this procedure would give the set of attributes shared by the minimal objects which satisfy the properties $B$. Conversely, $\DCl{A}$ where $A\subseteq G$ describes the minimal set of objects whichs satisfy the properties satisfied by all the objects in $A$.  
+
+For an example, consider the defeasible context $\K = \{G,M,I,<\}$, with $o_i < o_j$ if $i < j$ for all objects. 
+\begin{figure}[h]
+  \begin{center}
+    \begin{tabular}{c|cccc}
+              & $m_1$     & $m_2$     & $m_3$     & $m_4$     \\ \hline
+        $o_1$ & $\times$  & $\times$  &           & $\times$  \\ 
+        $o_2$ & $\times$  & $\times$  & $\times$  &           \\ 
+        $o_3$ &           & $\times$  & $\times$  & $\times$  \\ 
+        $o_4$ &           & $\times$  &           & $\times$ 
+    \end{tabular}
+  \end{center}
+  \caption{Defeasible Formal Context}
+  \label{Figure:Initial Defeasible Formal Context}
+\end{figure}
+
+
+Given $A = \{m_2, m_3\}$, we have that $\underlinesymbol{A}^\circ = \{o_1\}$, and $\DCl{A} = \{m_1, m_2, m_4\}$. Conversely, given $B = \{o_3, o_4\}$, $\underlinesymbol{B}^\circ = \{m_2, m_3, m_4\}$, $\DCl{B} = \{o_3\}$.\footnote[1]{I acknowledge that this second example could just be replaced with $Min(B)$, I will think more about this. } 
+
+%-------------_%
+
+\subsubsection{Properties of $(\underlinesymbol{\cdot}^\circ)^\circ$}
+
+\textbf{nonmonotonic:} $A \subseteq B \not \Rightarrow \DCl{A} \subseteq \DCl{B}$
+
+Assume $\DCl{\cdot}$ were monotonic; then $A\subseteq B \Rightarrow \DCl{A} \subseteq \DCl{B}$.
+
+From Figure~\ref{Figure:Initial Defeasible Formal Context}, if we take the oo-operation on $A_1 = \{m_1, m_2\}$, we get $\DCl{A_2} = \{o_1\}^\circ = \{m_1, m_2, m_4\}$. Then, on $A_2 = \{m_1, m_2, m_3\}$, we have $\DCl{A_2} = \{o_2\}^\circ = \{m_1, m_2, m_3\}$. Obviously, we have $A_1 \subseteq A_2$ but $\DCl{A_1} \not \subset \DCl{A_2}$. Thus, the oo-operator is nonmonotonic. 
+
+\textbf{extensive:} $X \subseteq \DCl{X}$
+
+
+
+Assume that $\DCl{\cdot}$ is not extensive, so for some $X \subseteq M, X \not \subseteq \DCl{X}$. This means that there is some minimal set of objects, $\underlinesymbol{X}^\circ$, such that $\{m\in M | \forall g \in \underlinesymbol{X}^\circ, gIm \}$. Thus, we would have $X \not \subseteq \DCl{X}$. However, we know from construction that $\forall g \in \underlinesymbol{X}^\circ$,  
+
+
+\textbf{idempotent:} $\DCl{A} = \DCl{\DCl{A}}$
+
+\end{document}
