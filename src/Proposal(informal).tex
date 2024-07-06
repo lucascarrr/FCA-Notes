@@ -1,26 +1,33 @@
 \documentclass[11pt]{article}
-
-% Packages for better typography and formatting
-\usepackage[utf8]{inputenc}  % Handle UTF-8 encoding
-\usepackage[T1]{fontenc}     % Better font encoding
-\usepackage{lmodern}         % Improved font
-\usepackage{microtype}       % Better spacing
-\usepackage{geometry}        % Adjust margins
-\usepackage{amsmath, amssymb} % Math symbols and formatting
-\usepackage{graphicx}        % Include graphics
-\usepackage{hyperref}        % Hyperlinks
-\usepackage{enumitem}        % Customizable lists
-\usepackage{xcolor}          % Color text
-\usepackage{tcolorbox}       % Colored boxes
+\usepackage[utf8]{inputenc}  
+\usepackage[T1]{fontenc}     
+\usepackage{lmodern}         
+\usepackage{microtype}       
+\usepackage{geometry}        
+\usepackage{amsmath, amssymb} 
+\usepackage{graphicx}        
+\usepackage{hyperref}        
+\usepackage{enumitem}        
+\usepackage{xcolor}          
+\usepackage{tcolorbox}       
 \usepackage{accents}
+
 \usepackage{tikz}
+\usepackage{stmaryrd}
 \usepackage{caption}
+\usetikzlibrary{patterns}
 \usepackage{multicol}
+\usepackage{blindtext}
+\usepackage{breqn}
 \usepackage{titlesec}
-\usepackage[parfill]{parskip} % Use parskip package without extra space
+\usepackage[parfill]{parskip} 
+
+\hypersetup{
+    colorlinks = false,
+    linkbordercolor = {white},
+}
 
 \input{macros.tex}
-% Geometry settings for better note-taking space
 \geometry{
   a4paper,
   left=0.5in,
@@ -28,69 +35,333 @@
   top=0.5in,
   bottom=0.5in,
 }
-\title{Towards a Notion of Defeasibility in Formal Concept Analysis}
+\title{Defeasibility in Formal Concept Analysis}
 \author{Lucas Carr}
-\date{06.06.24}
+\date{06.06.24 - }
 
 \begin{document}
 \maketitle
+\tableofcontents
 
-\section{Introduction}
-\section{The Initial Case}
-\subsection{A Defeasible Formal Context} 
-We define a defeasible formal context a $\K := (G,M,I,<)$ where $G$ is a set of objects, $M$ a set of attributes, $I$ an incidence relation on $G \times M$ expressed as $gIm$ for $g\in G, m\in M$ (exactly as we see with typical formal contexts); and, $<$ a strict partial order over $G$. 
+\section{Establishing Requirements}
+\subsection{A Defeasible Formal Context}
+A regular formal context $\mathbb{K}$ is a tripple $(G,M,I)$ of objects $G$, attributes $M$, and an incidence relation $I \subseteq G \times M$. We define a defeasible formal context $\K$ as a quadruple $(G,M,I,\leq)$ with $G,M,I$ as before, and $\leq$ being a partial order on the objects $G$.
 
-\subsection{The Derivation Operators}
-Over the defeasible formal context $\K = (G,M,I,<)$ we introduce two operators; $(\underlinesymbol{X}^\circ)$ and $\DCl{X}$, $X\subseteq M$. Before we define these operators, we introduce a definition of minimality over objects in $G$. 
+The ordering on $G$ can be loosely thought of as expressing a preference on objects such that if $o_1 \leq o_2$ and $o_1 \not = o_2$, then $o_1$ is preferred to $o_2$, where $o_1, o_2 \in G$.
 
-\begin{align}
-  Min(A) := \{g \in A | \nexists h \in A, h < g\} 
-\end{align}
+\subsection{Minimisation}
+In formal context analysis, two operators are defined
 
-We can now define the respective operators, $A \subseteq G, B\subseteq M$. 
+\begin{align*}
+  A^{\uparrow} := \{m \in M | \forall g \in A, (g,m) \in I\}   &  & A \subseteq G \\
+  \\
+  B^{\downarrow} := \{g \in G | \forall m \in B, (g,m) \in I\} &  & B \subseteq M
+\end{align*}
 
-\begin{align}
-  \underlinesymbol{A}^\circ &:= \{m \in M | \forall g \in Min(A), gIm\} \\ 
-  \underlinesymbol{B}^\circ &:= \{g \in G | \forall m \in B, \nexists h \in G h < g, gIm  \}
-\end{align}
+Much of the time it is not necessary to distinguish between $\cdot^{\uparrow}$ and $\cdot^{\downarrow}$, and so $A'$ and $B'$ are used instead.
 
-(1) Describes the minimally ranked objects in $G$. From here, (2) describes an operation from a set of objects $A \subseteq G$ to the attributes shared by the minimal elements in $A$. (3) Is an operation from a set of attributes $B\subseteq M$ which results in the \textit{minimal} set of objects which have all the attributes in $B$. 
+We introduce a variation on these two operators, which has the same set building behavior, but discards any objects which are not minimal with respect to the partial order given by $\K$. The result is
 
-We can apply these operators twice, $\DCl{B}$ where $A\subseteq M$; this procedure would give the set of attributes shared by the minimal objects which satisfy the properties $B$. Conversely, $\DCl{A}$ where $A\subseteq G$ describes the minimal set of objects whichs satisfy the properties satisfied by all the objects in $A$.  
+\begin{align*}
+  Min(O)                     & := \{g \in O | \nexists h \in O, h < g \} & O \subseteq G \\
+  \\
+  \underline{A^{\uparrow}}   & := (Min(A))^{\uparrow}                    & A \subseteq G \\
+  \\
+  \underline{B^{\downarrow}} & := Min(B^{\downarrow})                    & B \subseteq M
+\end{align*}
 
-For an example, consider the defeasible context $\K = \{G,M,I,<\}$, with $o_i < o_j$ if $i < j$ for all objects. 
+When applied to a set of objects $A \subseteq G$, the minimisation operator removes all non-minimal elements from $A$, and then takes $A^{\uparrow}$. This gives us the set of attributes common to all minimal objects from $A$. Conversely, when applied to a set of atttributes $B \subseteq M$, the minimisation operator takes $B^{\downarrow}$, and removes all non-minimal objects, leaving the minimal objects which have all the attributes from $B$ in their object intents.
+
+Given a set of attributes $B \subseteq M$, we can determine $\underline{(\underline{B^{\downarrow}})^{\uparrow}}$ (although, this double minimisation is not strictly necessary, when applying the operator twice on an initial set of attributes $B\subseteq M$, we will omit the double minimisation, giving us $\dminO{B}$). This constructs the set of attribute which are common to all minimal objects which have $B$ in their object intents. We make this clear with an example
+
+
+\subsubsection{Example}
+
+The context $\K = (G,M,I,\leq)$ with the order over $G$ being $\{o_1 < o_3, o_2 < o_3, o_3 < o_4, o_5 < o_4\}$
 \begin{figure}[h]
   \begin{center}
-    \begin{tabular}{c|cccc}
-              & $m_1$     & $m_2$     & $m_3$     & $m_4$     \\ \hline
-        $o_1$ & $\times$  & $\times$  &           & $\times$  \\ 
-        $o_2$ & $\times$  & $\times$  & $\times$  &           \\ 
-        $o_3$ &           & $\times$  & $\times$  & $\times$  \\ 
-        $o_4$ &           & $\times$  &           & $\times$ 
+    \begin{tabular}{r|cccccc}
+            & feathered & laysEggs & aquatic  & canFly   & hasScales \\ \hline
+      $o_1$ &           & $\times$ & $\times$ &          & $\times$  \\
+      $o_2$ & $\times$  & $\times$ & $\times$ & $\times$ & $$        \\
+      $o_3$ &           & $\times$ & $\times$ &          & $\times$  \\
+      $o_4$ & $\times$  & $\times$ & $$       & $\times$ & $$        \\
+      $o_5$ & $\times$  & $\times$ & $$       & $$       & $$
     \end{tabular}
   \end{center}
   \caption{Defeasible Formal Context}
-  \label{Figure:Initial Defeasible Formal Context}
+  \label{fig:defeasible-formal-context}
 \end{figure}
 
+Given the set of attributes $Y :=$\{\texttt{laysEggs}, \texttt{canFly}\}, our first application of the minimisation operator gives us $\minO{Y} = Min(\{o_2, o_4\}) = \{o_2\}$. Applying the operator again, to the first result, we get $\dminO{Y} = \minO{\{o_2\}} = \{\text{\texttt{feathered}, \texttt{laysEggs}, \texttt{aquatic}, \texttt{canFly}}\}$. Plainly, this tells us that the most preferred objects which can fly and lay eggs, also are feathered and aquatic.
 
-Given $A = \{m_2, m_3\}$, we have that $\underlinesymbol{A}^\circ = \{o_1\}$, and $\DCl{A} = \{m_1, m_2, m_4\}$. Conversely, given $B = \{o_3, o_4\}$, $\underlinesymbol{B}^\circ = \{m_2, m_3, m_4\}$, $\DCl{B} = \{o_3\}$.\footnote[1]{I acknowledge that this second example could just be replaced with $Min(B)$, I will think more about this. } 
+\subsection{Properties of the minimisation-operator}
+\label{subsection:properties-min-operator}
+The $\cdot''$ operator in FCA is a closure-operator, so it is monotonic, extensive, and idempotent. In the following, we show that the minimisation-operator is nonmonotonic, extensive, and idempotent over sets of $M$ in a defeasible context $\K = (G,M,I,\leq)$.
 
-%-------------_%
+\begin{proposition}
+  \label{proposition-min_operator}
+  The minimisation operator is nonmonotonic, extensive, and idempotent over sets of $M$.
+\end{proposition}
 
-\subsubsection{Properties of $(\underlinesymbol{\cdot}^\circ)^\circ$}
+\begin{proof}
+  Nonmonotonicity, Extensivity, Idempotency of the minimisation operator.
 
-\textbf{nonmonotonic:} $A \subseteq B \not \Rightarrow \DCl{A} \subseteq \DCl{B}$
+  \textbf{Nonmonotonicity:}
 
-Assume $\DCl{\cdot}$ were monotonic; then $A\subseteq B \Rightarrow \DCl{A} \subseteq \DCl{B}$.
+  If $\dminO{\cdot}$ were monotonic, we would have $A \subseteq B \Rightarrow \dminO{A} \subseteq \dminO{B}$, with $A,B \subseteq M$.
 
-From Figure~\ref{Figure:Initial Defeasible Formal Context}, if we take the oo-operation on $A_1 = \{m_1, m_2\}$, we get $\DCl{A_2} = \{o_1\}^\circ = \{m_1, m_2, m_4\}$. Then, on $A_2 = \{m_1, m_2, m_3\}$, we have $\DCl{A_2} = \{o_2\}^\circ = \{m_1, m_2, m_3\}$. Obviously, we have $A_1 \subseteq A_2$ but $\DCl{A_1} \not \subset \DCl{A_2}$. Thus, the oo-operator is nonmonotonic. 
+  Let $\K$ be a defeasible context with two objects, $o_1$ and $o_2$, attributes $\{m_1, m_2, m_3, m_4\}$, and an ordering $o_1 < o_2$. The intents of each objects are $\{m_1, m_2, m_4\}$ and $\{m_1, m_2, m_3\}$, respectively. If we take the sets $A = \{m_1,m_2\}$ and $B = \{m_1, m_2, m_3\}$ we have that $A\subseteq B$. However, $\dminO{A} = \{m_1, m_2, m_4\}$ and $\dminO{B} = \{m_1, m_2, m_3\}$, and so $\dminO{A} \not \subseteq \dminO{B}$. Consequently, the minimisation operator is nonmonotonic.
 
-\textbf{extensive:} $X \subseteq \DCl{X}$
+  \textbf{Extensive:}
 
-Assume that $\DCl{\cdot}$ is not extensive; then, there exists some $X \not \subseteq \DCl{X}$. Let $Y\subseteq G$ such that $Y = \underlinesymbol{X}^\circ$. Then $\underlinesymbol{Y}^\circ$ is the set of properties shared by all minimal objects in $Y$ (this minimal requirement is redundant since all elements of $Y$ are minimal by construction). Observe that $\underlinesymbol{Y}^\circ \equiv \DCl{X}$. Since $X \not \subseteq \DCl{X}$, there must be some $y\in Y$ such that $y^\circ \cap X \not = X$. That is, there is some object in $Y$ which does not have all the attributes from $X$. However, this is a contradiction, since $y$ would not be in $Y$ since it is not the case that $\forall m \in X, yIm$ - which is our definition of $(\underlinesymbol{\cdot}^\circ)$. 
+  For $A \subseteq M$, extensivity requires that $A \subseteq \dminO{A}$.
+
+  We know that $A \subseteq A''$, since $\cdot''$ is extensive. So, for all $a \in A'$, we have that $A$ is in $a$ object intent $A \subseteq a'$. Since the minimisation operator simply reduces the size of $A'$, then $\minO{A} \subseteq A'$. So the earlier condition holds, that for all $a \in \minO{A}$ the object intent is a superset of $A$, or $A \subseteq a'$. From this, it is easy to see that $A \subseteq \bigcap \{a' | a \in \minO{A}\}$, and equivalently $A \subseteq \dminO{A}$.
+
+  \textbf{Idempotent:}
+
+  The proof for idempotency follows from extensivity. Given some $A \subseteq M$, $\dminO{A}$ represents attributes of the minimal objects satisfying $A$. If $\dminO{A} \not =\dminO{(\dminO{A})}$, then we would have that there were some new minimal objects in $\minO{(\dminO{A})}$, these objects would all have $A$ in their intents by extensivity. But this is a contradiction, since $\dminO{A}$ is defined to be the minimal objects with $A$ in their intent, there can be no objects minimal $\minO{A}$ which also have $A$ in their intents.
+
+\end{proof}
+
+\section{Defeasible Implications}
+\subsection{Normal Implications}
+Conventionally, we define an implication $A\rightarrow B$ between two sets of attributes $A,B \subseteq M$. An implication is respected\footnote{being \textit{respected} is analagous to being entailed} in a formal context iff
+
+\begin{itemize}
+  \item $B \subseteq A''$
+  \item $A' \subseteq B'$
+\end{itemize}
+
+An example from \autoref{fig:defeasible-formal-context} would be that $\texttt{canFly} \rightarrow \texttt{feathered}$. The objects which satisfy the attribute \texttt{canFly}, namely $\{o_2, o_4\}$, are a subset of those which satisfy \texttt{feathered}, $\{o_2, o_4, o_5\}$. We do not have that $\texttt{feathered} \rightarrow \texttt{canFly}$ - this is obvious, and can be shown by $\texttt{canFly} \not \subseteq \texttt{feathered}''$
+
+\subsection{Borrowing the $\twiddle$}
+In $\K = (G,M,I, <)$, we define a defeasible implication $A \twiddle B$, where $A,B \subseteq M$ as being respected in the $\K$ iff
+\begin{itemize}
+  \item $B \subseteq \dminO{A}$
+  \item $\minO{A} \subseteq B'$
+\end{itemize}
+
+The motivation behind this style of implication is to convey a type of consequence that may not exist in the entire context, but holds for at least the preferred object(s).
+
+\subsubsection{Incomparible Objects}
+
+As defined, the $A \twiddle B$ relation relies on the notion of minimal objects derived through the minimisation operation $\minO{A}$. This raises (at least) two important questions; how do we deal with incomparible objects? And, what happens if the set of minimal objects is empty?
+
+The first question is straightforward, and is actually handled in the definition of the operator found in \autoref{subsection:properties-min-operator}. If there are incomparible objects in $\minO{A}$, we take the intersection of all object intents, giving us
+\[\dminO{A} := \cap \{a' | a \in A\}\]
+
+If the set of minimal objects $\minO{A}$ is empty, we say that $\dminO{A} = M$; this holds vacuously - there are no objects in $\minO{A}$, so (glossing over exact details) every object has every attribute.
+
+From \autoref{fig:defeasible-formal-context}, $\texttt{feathered} \twiddle \texttt{canFly}$ is a valid defeasible implication in $\K$. The set of minimal objects which satisfy $\texttt{feathered}$ also satisfy $\texttt{canFly}$. Or, $\{\texttt{canFly}\} \subseteq \dminO{\{\texttt{feathered}\}}$. The point here is that while it is not the case that all feathered objects can fly, we still want to be able to say that the minimal (read: typical) feathered objects do in fact fly. Or, that typical feathered objects can fly.
+
+\subsection{Do defeasible implications hold through negation of antecedent?}
+Given the defeasible context $\K$, with $o_1 < o_2$
+
+\begin{figure}[h]
+  \begin{center}
+    \begin{tabular}{r|cccc}
+            & \texttt{wheels} & \texttt{engine} & \texttt{drive} \\ \hline
+      $o_1$ &                 & $\times$        & $\times$       \\
+      $o_2$ & $\times$        & $\times$        &                \\
+    \end{tabular}
+  \end{center}
+  \caption{Defeasible Formal Context}
+  \label{fig:small-defeasible-context}
+\end{figure}
+
+If we refer again to \autoref{fig:small-defeasible-context}, we could see that the implication $\{\texttt{wheels, engine}\} \twiddle \{\texttt{drive}\}$ is respected by $o_1$, and $o_1 < o_2$, but $\K$ does not respect $\{\texttt{wheels, engine}\} \ntwiddle \{\texttt{drive}\}$. This might seem unintuitive, \textit{the implication holds in our most preferred objects, after all}.
+
+However, this is consistent with preferential consequence relations.
+
+From \cite{kaliski2020overview}, $4.2$ Preferential Entailment:
+\begin{quotation}
+  A preferential interpretation $\mathcal{P}$ is a tripple $\langle S, l, \pref \rangle$ with $S$ being a set of states, l:S$\mapsto \mathcal{U}$ is a function mapping states to valuations, and $\pref$ a preorder on $S$. For every $\alpha \in \mathcal{L}$ and some $\mathcal{P}$, let $\llbracket \alpha \rrbracket^{\mathcal{P}}:= \{s\in S, S\in \mathcal{P}, l(s) \Vdash \alpha\}$. In other words, let $\llbracket \alpha \rrbracket^{\mathcal{P}}$ be the set of all states in $\mathcal{P}$ such that the valuation associated with each state satisfies $\alpha$.
+\end{quotation}
+
+And also,
+\begin{quotation}
+  Given a preferential interpretation $\mathcal{P} = \langle S, l, \pref \rangle$ and $\alpha, \beta \in \mathcal{L}$, then $\mathcal{P}$ defines a preferential consequence relation $\twiddle_{\mathcal{P}}$ such that $\alpha \twiddle_{\mathcal{P}} \beta$ iff for any $s$ minimal in $\llbracket \alpha \rrbracket^{\mathcal{P}}, s \Vdash \beta$.
+\end{quotation}
+
+[\textit{I would like to have a discussion with Tommie about why this is the case, it is essential for the Rational Closure algorithm, but there should be more substantial justification}]
+
+\section{Properties of Implication using minimisation operator}
+\subsection{KLM Postulates}
+
+These are some of the KLM postulates, described in \cite{kaliski2020overview}. Reflexivity is another postulate, which has been left our for now for brevity. The \textit{Or} postulate was also omitted, since there is no notion of disjunction in FCA.
+
+\begin{theorem}[Left Logical Equivalence (LLE)]
+  If $A \leftrightarrow B$ and $A \twiddle C$, then $B \twiddle C$.
+\end{theorem}
+
+\begin{proof}
+  Let $A, B, C \subseteq M$.
+  \begin{enumerate}
+    \item $\minO{A} \subseteq C'$ \hfill (Given: $A \twiddle C$)
+    \item $\minO{A} = \minO{B}$ \hfill (Given: $A \leftrightarrow B$)
+    \item $\minO{B} \subseteq C'$ \hfill (From 1 and 2)
+    \item Therefore, $B \twiddle C$ \hfill (By definition of $\twiddle$)
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Right Weakening (RW)]
+  If $A \rightarrow B$ and $C \twiddle A$, then $C \twiddle B$.
+\end{theorem}
+
+\begin{proof}
+  Let $A, B, C \subseteq M$.
+  \begin{enumerate}
+    \item $A' \subseteq B'$ \hfill (Given: $A \rightarrow B$)
+    \item $\minO{C} \subseteq A'$ \hfill (Given: $C \twiddle A$)
+    \item $\minO{C} \subseteq B'$ \hfill (Transitivity of $\subseteq$, from 1 and 2)
+    \item Therefore, $C \twiddle B$ \hfill (By definition of $\twiddle$)
+  \end{enumerate}
+\end{proof}
+\clearpage
+\begin{lemma}
+  For any $A, B \subseteq M$, $A' \cap B' = (A \cup B)'$.
+\end{lemma}
+
+\begin{proof}
+  We show $\subseteq$ in both directions.
+
+  $A' \cap B' \subseteq (A \cup B)'$:
+
+  Let $g \in A' \cap B'$
+  \begin{enumerate}
+    \item $\forall m \in A, (g,m) \in I$ \hfill (Definition of $A'$)
+    \item $\forall m \in B, (g,m) \in I$ \hfill (Definition of $B'$)
+    \item So, $\forall m \in A \cup B, (g,m) \in I$ \hfill (1,2)
+    \item $g \in (A \cup B)'$ \hfill (3 is definition of $(A \cup B)'$)\\
+  \end{enumerate}
+
+  $(A \cup B)' \subseteq A' \cap B'$:
+
+  Let $g \in (A \cup B)'$
+  \begin{enumerate}
+    \item $\forall m \in A \cup B, (g,m) \in I$. \hfill (Definition of $(A \cup B)'$)
+    \item $\forall m \in A, (g,m) \in I$ \hfill (1, $A \subseteq A \cup B$)
+    \item $\forall m \in B, (g,m) \in I$ \hfill (1, $B \subseteq A \cup B$)
+    \item So, $g \in A' \cap B'$ \hfill(2,3)
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[And]
+  If $A \twiddle B$ and $A \twiddle C$, then $A \twiddle (B \cup C)$.
+\end{theorem}
+
+\begin{proof}
+  Let $A \twiddle B$ and $A \twiddle C$ with $A, B, C \subseteq M$
+  \begin{enumerate}
+    \item $\minO{A} \subseteq B'$ \hfill (Given: $A \twiddle B$)
+    \item $\minO{A} \subseteq C'$ \hfill (Given: $A \twiddle C$)
+    \item $\minO{A} \subseteq B' \cap C'$ \hfill (1,2)
+    \item $\minO{A} \subseteq (B\cup C)'$ \hfill (3, Lemma 3.3)
+    \item $A \twiddle B \cup C$ \hfill (From 4)
+  \end{enumerate}
+\end{proof}
+
+\begin{lemma}
+  If $A \twiddle B$, then $\minO{A} = \minO{(A \cup B)}$
+\end{lemma}
+
+\begin{proof}
+
+  \begin{enumerate}
+    \item $\minO{A} \subseteq A'$ \hfill (Definition of minimisation)
+    \item $\minO{A} \subseteq B'$ \hfill (Given that $A \twiddle B$)
+    \item $\minO{A} \subseteq (A \cup B)'$ \hfill (1,2, Lemma 3.3)
+    \item $(A \cup B)' \subseteq A'$ \hfill (Set Theory)
+    \item $\minO{A} \subseteq (A \cup B)' \subseteq A'$ \hfill (3,4)
+  \end{enumerate}
+  I am not quite sure how to finish off this proof, but you can see that objects in $\minO{A}$ are all in $(A\cup B)'$. Additionally, all the objects in $(A\cup B)'$ are in $A'$. There should be some transitivity for minimality. Diagram below illustrates this notion. I.e. the minimal objects in $(A \cup B)'$ are preciely $\minO{A}$, or $\minO{A} = \minO{(A\cup B)}$.
+  \begin{center}
+    \begin{tikzpicture}[scale=1]
+      % Draw the circles
+      \draw (0,0) circle (2cm) node at (-1,1.5) {$A'$};
+      \draw (1,0) circle (2cm) node at (2,1.5) {$B'$};
+
+      % Shade the bottom portion of the intersection
+      \begin{scope}
+        \clip (0,0) circle (2cm);
+        \clip (1,0) circle (2cm);
+        \fill[pattern=north west lines, pattern color=gray!60, opacity=1] (-1,-2) rectangle (2,-0.5);
+      \end{scope}
+
+      % Add label for the shaded area
+      \node at (0.5,-0.725) {$\minO{A}$};
+
+      % Add label in the intersection
+      \node at (0.5,0.7) {$(A \cup B)'$};
+    \end{tikzpicture}
+  \end{center}
+\end{proof}
+
+% \begin{proof} We will show $\minO{A} \subseteq \minO{(A\cup B)}$ and $\minO{A} \supseteq \minO{(A\cup B)}$
+
+%   $\minO{A} \subseteq \minO{(A\cup B)}$:
+
+%   Let $g \in \minO{A}$
+%   \begin{enumerate}
+%     \item $\minO{A} \subseteq A'$ \hfill  (Definition of minimisation)
+%     \item $\minO{A} \subseteq B'$ \hfill (Given $A \twiddle B$)
+%     \item $\minO{A} \subseteq (A \cup B)'$ \hfill (1,2, Lemma 3.3)
+%           % \item $B \subseteq g'$ \hfill (4, Given $g \in \minO{A}$)
+%     \item $\nexists h \in A'$ such that $ h < g$ \hfill (Definition of $\minO{A}$)
+%           % \item $\nexists h \in G$ such that $h < g$ and $A \subseteq h'$ \hfill (5,6, By construction of $\minO{A}$)
+%           % \item $\forall a \in \minO{(A \cup B)}, a \in A'$ \hfill(Definition of $\minO{(A\cup B)}$)
+%     \item $\minO{(A\cup B)} \subseteq (A \cup B)' \subseteq A'$ \hfill (See)
+%     \item $\nexists a \in \minO{(A \cup B)}$ with $a < g$ \hfill (4,5)
+%     \item $g \in (A \cup B)'$ \hfill (Given: $g\in \minO{A}$, 3)
+%           % \item $\minO{(A \cup B)} \subseteq (A \cup B)'$ \hfill (Definition of minimisation)
+%     \item $g \in \minO{(A \cup B)}$ \hfill (6,7, Definition of $\minO{(A \cup B)}$)
+%     \item $g$ is an arbitray element in $\minO{A}$, so $\minO{A} \subseteq \minO{(A \cup B)}$
+%   \end{enumerate}
+
+%   $\minO{A} \supseteq \minO{(A\cup B)}:$
+
+%   Let $g \in \minO{(A \cup B)}$
+%   \begin{enumerate}
+%     \item $\minO{A} \subseteq B'$ \hfill (Given $A\twiddle B$)
+%     \item $\minO{A} \subseteq A'$ \hfill (Definition of minimisation)
+%     \item $\minO{A} \subseteq (A\cup B)'$ \hfill (1,2, Lemma 3.3)
+%     \item $\nexists h \in (A \cup B)'$ such that $h < g$ \hfill (Definition of $\minO{(A \cup B)}$)
+%     \item $\nexists a \in \minO{A}$ such that $a < g$ \hfill (3,4)
+%   \end{enumerate}
+
+% \end{proof}
+
+\begin{theorem}[Cautious Monotonicity (CM)]
+  If $A \twiddle B$ and $A \twiddle C$, then $(A \cup B) \twiddle C$.
+\end{theorem}
+
+\begin{proof}
+  Let $A, B, C \subseteq M$.
+  \begin{enumerate}
+    \item $\minO{A} \subseteq A'$ \hfill (Definition of minimisation operator)
+    \item $\minO{A} \subseteq B'$ \hfill (Given: $A \twiddle B$)
+    \item $\minO{A} \subseteq C'$ \hfill (Given: $A \twiddle C$)
+    \item $\minO{A} \subseteq (A \cup B)' $ \hfill (1,2, Lemma 3.3)
+    \item $\minO{A} \subseteq (A \cup C)' $ \hfill (1,3, Lemma 3.3)
+    \item $\minO{A} = \minO{(A\cup B)}$ \hfill (4, Lemma 3.5)
+    \item $\minO{A} = \minO{(A \cup C)}$ \hfill (5, Lemma 3.5)
+    \item $\minO{(A\cup C)} \subseteq (A \cup C)'$ \hfill (Definition of minimisation)
+    \item $\minO{(A\cup B)} \subseteq (A\cup C)'$ \hfill (6,7,8)
+    \item $(A\cup B) \twiddle C$ \hfill (9 is definition of this implication)
+  \end{enumerate}
+\end{proof}
+
+\begin{remark}
+  Cautious monotonicity stipulates that when given new information, if that information could have been inferred before, then it should not be inconsistent with earlier inferences. Monotonicity requires that any new knowledge not invalidate existing knowledge; CM weakens this requirement to be that only pieces of knowledge inferred from the same existing knowledge should not invalidate one another.
+\end{remark}
 
 
-\textbf{idempotent:} $\DCl{A} = \DCl{\DCl{A}}$
+\section{Questions}
+\subsection{Is every material implication a defeasible implication?}
+If we have a defeasible formal context $\K = (G,M,I,<)$ where $A,B\subseteq M$ and $A\rightarrow B$ is a valid implication over $M$, does $A \twiddle B$ hold in $\K$?
 
+\bibliographystyle{IEEEtran}
+\bibliography{references}  % the name of your .bib file
 \end{document}

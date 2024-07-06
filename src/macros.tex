@@ -89,19 +89,22 @@
 \newcommand{\solve}[1]{\setlength{\paraindent}{0cm}\textbf{\textit{Solution: }}\setlength{\parindent}{1cm}#1 \Qed}
 
 \newcommand{\middleline}{
-    \par\noindent\raisebox{.5\baselineskip}{\makebox[\linewidth]{\rule{0.5\textwidth}{0.4pt}}}\par
+      \par\noindent\raisebox{.5\baselineskip}{\makebox[\linewidth]{\rule{0.5\textwidth}{0.4pt}}}\par
 }
 
 \newcommand{\calC}{\mathcal{C}}
 \newcommand{\st}{\text{s.t.}}
-\newcommand{\calD}{\mathcal{D}} 
+\newcommand{\calD}{\mathcal{D}}
 \newcommand{\calB}{\mathcal{B}}
 % Theorems 
 % Define theorem-like environments
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{proposition}[lemma]{Proposition}
-\newtheorem{definition}[lemma]{Definition}
-\newtheorem{example}[lemma]{Example}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
 \newenvironment{proof}{\paragraph{Proof:}}{\hfill$\square$}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Begin macro definitions
@@ -346,7 +349,7 @@
 \newcommand{\ndentails}{\not\mid\hskip-0.40ex\approx}
 \renewcommand{\bar}[1]{\overline{#1}}
 \newcommand{\twiddle}{\mathrel|\joinrel\sim}
-\newcommand{\ntwiddle}{\not\twiddle}
+\newcommand{\ntwiddle}{\mathrel|\joinrel\not\sim}
 %\newcommand{\usually}{\raisebox{-0.5ex}{$\:\stackrel{\sqsubset}{{\scriptstyle\sim}}\:$} }
 \newcommand{\usually}{\:\raisebox{0.45ex}{\ensuremath{\sqsubset}}\hskip-1.7ex\raisebox{-0.6ex}{\scalebox{0.9}{\ensuremath{\sim}}}\:}
 \newcommand{\nusually}{\not\hspace{-1.1mm}\usually}
@@ -387,13 +390,13 @@
 % Definitions for flag and flame (defeasible modal operators):
 \newcommand*{\myleftmid}{%
       \mathrel{\vcenter{\offinterlineskip
-      \vskip-0.25ex\hbox{$\shortmid$}}}}
+                  \vskip-0.25ex\hbox{$\shortmid$}}}}
 \newcommand*{\myrightmid}{%
       \mathrel{\vcenter{\offinterlineskip
-      \vskip-0.7ex\hbox{$\shortmid$}}}}
+                  \vskip-0.7ex\hbox{$\shortmid$}}}}
 \newcommand*{\twosim}{%
       \mathrel{\vcenter{\offinterlineskip
-      \vskip0.05ex\hbox{$\sim$}\vskip0.25ex\hbox{$\sim$}}}}
+                  \vskip0.05ex\hbox{$\sim$}\vskip0.25ex\hbox{$\sim$}}}}
 \newcommand{\bartwosim}{\mathrel{\myleftmid}\hskip-0.03ex\joinrel\twosim}
 % Defeasible necessity:
 \newcommand{\dnec}{\mathrel{\bartwosim}\hskip-.05ex\joinrel\myrightmid}
@@ -429,7 +432,7 @@
 %\renewcommand{\familydefault}{\sfdefault} % sets font to sans serif globally 
 
 % Useful commands:
-\newcommand{\nil}{\textcolor{white}{a}} 
+\newcommand{\nil}{\textcolor{white}{a}}
 \newcommand{\hide}[1]{}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 %\newcommand{\todo}[1]{\textcolor{red}{\underline{{\sf #1}} $\blacktriangleright$}}
@@ -439,23 +442,26 @@
 \newlength{\RoundedBoxWidth}
 \newsavebox{\WhiteRoundedBox}
 \newenvironment{WhiteBox}[1][\dimexpr\textwidth-4.5ex]%
-   {\setlength{\RoundedBoxWidth}{\dimexpr#1}
-    \begin{lrbox}{\WhiteRoundedBox}
-       \begin{minipage}{\RoundedBoxWidth}}%
-   {   \end{minipage}
-    \end{lrbox}
-    \begin{center}
-    \begin{tikzpicture}%
-       \draw node[draw=Orange,fill=white,rounded corners,line width=1.5pt,%
-             inner sep=0.7ex,text width=\RoundedBoxWidth]%
-             {\usebox{\WhiteRoundedBox}};
-    \end{tikzpicture}
-    \end{center}}
+{\setlength{\RoundedBoxWidth}{\dimexpr#1}
+      \begin{lrbox}{\WhiteRoundedBox}
+            \begin{minipage}{\RoundedBoxWidth}}%
+                  {   \end{minipage}
+      \end{lrbox}
+      \begin{center}
+            \begin{tikzpicture}%
+                  \draw node[draw=Orange,fill=white,rounded corners,line width=1.5pt,%
+                        inner sep=0.7ex,text width=\RoundedBoxWidth]%
+                  {\usebox{\WhiteRoundedBmeaningox}};
+            \end{tikzpicture}
+      \end{center}}
 
 \newcommand{\cass}[2]{\mbox{$#1:#2$}}
 \newcommand{\rass}[3]{\mbox{$(#1,#2):#3$}}
 \newcommand{\underlinesymbol}[1]{\underline{#1}}
-\newcommand{\DCl}[1]{(\underlinesymbol{#1}^\circ)^\circ}
+\newcommand{\minO}[1]{\underlinesymbol{#1}'}
+\newcommand{\dminO}[1]{\underlinesymbol{#1'}'}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End macro definitions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
