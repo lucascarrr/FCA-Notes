@@ -11,17 +11,15 @@
 \usepackage{xcolor}          
 \usepackage{tcolorbox}       
 \usepackage{accents}
-
 \usepackage{tikz}
 \usepackage{stmaryrd}
 \usepackage{caption}
-\usetikzlibrary{patterns}
 \usepackage{multicol}
 \usepackage{blindtext}
 \usepackage{breqn}
 \usepackage{titlesec}
 \usepackage[parfill]{parskip} 
-
+\usetikzlibrary{patterns}
 \hypersetup{
     colorlinks = false,
     linkbordercolor = {white},
@@ -30,10 +28,10 @@
 \input{macros.tex}
 \geometry{
   a4paper,
-  left=0.5in,
-  right=0.5in,
-  top=0.5in,
-  bottom=0.5in,
+  left=0.75in,
+  right=0.75in,
+  top=0.75in,
+  bottom=0.75in,
 }
 \title{Defeasibility in Formal Concept Analysis}
 \author{Lucas Carr}
@@ -42,9 +40,10 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\clearpage
 
 \section{Establishing Requirements}
-\subsection{A Defeasible Formal Context}
+\subsection{A defeasible formal context}
 A regular formal context $\mathbb{K}$ is a tripple $(G,M,I)$ of objects $G$, attributes $M$, and an incidence relation $I \subseteq G \times M$. We define a defeasible formal context $\K$ as a quadruple $(G,M,I,\leq)$ with $G,M,I$ as before, and $\leq$ being a partial order on the objects $G$.
 
 The ordering on $G$ can be loosely thought of as expressing a preference on objects such that if $o_1 \leq o_2$ and $o_1 \not = o_2$, then $o_1$ is preferred to $o_2$, where $o_1, o_2 \in G$.
@@ -76,7 +75,6 @@ Given a set of attributes $B \subseteq M$, we can determine $\underline{(\underl
 
 
 \subsubsection{Example}
-
 The context $\K = (G,M,I,\leq)$ with the order over $G$ being $\{o_1 < o_3, o_2 < o_3, o_3 < o_4, o_5 < o_4\}$
 \begin{figure}[h]
   \begin{center}
@@ -109,25 +107,30 @@ The $\cdot''$ operator in FCA is a closure-operator, so it is monotonic, extensi
 
   \textbf{Nonmonotonicity:}
 
-  If $\dminO{\cdot}$ were monotonic, we would have $A \subseteq B \Rightarrow \dminO{A} \subseteq \dminO{B}$, with $A,B \subseteq M$.
+  \begin{quotation}
+    \noindent If $\dminO{\cdot}$ were monotonic, we would have $A \subseteq B \Rightarrow \dminO{A} \subseteq \dminO{B}$, with $A,B \subseteq M$. \\
 
-  Let $\K$ be a defeasible context with two objects, $o_1$ and $o_2$, attributes $\{m_1, m_2, m_3, m_4\}$, and an ordering $o_1 < o_2$. The intents of each objects are $\{m_1, m_2, m_4\}$ and $\{m_1, m_2, m_3\}$, respectively. If we take the sets $A = \{m_1,m_2\}$ and $B = \{m_1, m_2, m_3\}$ we have that $A\subseteq B$. However, $\dminO{A} = \{m_1, m_2, m_4\}$ and $\dminO{B} = \{m_1, m_2, m_3\}$, and so $\dminO{A} \not \subseteq \dminO{B}$. Consequently, the minimisation operator is nonmonotonic.
+    \noindent Let $\K$ be a defeasible context with two objects, $o_1$ and $o_2$, attributes $\{m_1, m_2, m_3, m_4\}$, and an ordering $o_1 < o_2$. The intents of each objects are $\{m_1, m_2, m_4\}$ and $\{m_1, m_2, m_3\}$, respectively. If we take the sets $A = \{m_1,m_2\}$ and $B = \{m_1, m_2, m_3\}$ we have that $A\subseteq B$. However, $\dminO{A} = \{m_1, m_2, m_4\}$ and $\dminO{B} = \{m_1, m_2, m_3\}$, and so $\dminO{A} \not \subseteq \dminO{B}$. Consequently, the minimisation operator is nonmonotonic.
+  \end{quotation}
 
-  \textbf{Extensive:}
+  \textbf{Extensivity:}
+  \begin{quotation}
+    \noindent For $A \subseteq M$, extensivity requires that $A \subseteq \dminO{A}$.\\
 
-  For $A \subseteq M$, extensivity requires that $A \subseteq \dminO{A}$.
+    \noindent We know that $A \subseteq A''$, since $\cdot''$ is extensive. So, for all $a \in A'$, we have that $A$ is in $a$ object intent $A \subseteq a'$. Since the minimisation operator simply reduces the size of $A'$, then $\minO{A} \subseteq A'$. So the earlier condition holds, that for all $a \in \minO{A}$ the object intent is a superset of $A$, or $A \subseteq a'$. From this, it is easy to see that $A \subseteq \bigcap \{a' | a \in \minO{A}\}$, and equivalently $A \subseteq \dminO{A}$.
 
-  We know that $A \subseteq A''$, since $\cdot''$ is extensive. So, for all $a \in A'$, we have that $A$ is in $a$ object intent $A \subseteq a'$. Since the minimisation operator simply reduces the size of $A'$, then $\minO{A} \subseteq A'$. So the earlier condition holds, that for all $a \in \minO{A}$ the object intent is a superset of $A$, or $A \subseteq a'$. From this, it is easy to see that $A \subseteq \bigcap \{a' | a \in \minO{A}\}$, and equivalently $A \subseteq \dminO{A}$.
+  \end{quotation}
 
-  \textbf{Idempotent:}
-
-  The proof for idempotency follows from extensivity. Given some $A \subseteq M$, $\dminO{A}$ represents attributes of the minimal objects satisfying $A$. If $\dminO{A} \not =\dminO{(\dminO{A})}$, then we would have that there were some new minimal objects in $\minO{(\dminO{A})}$, these objects would all have $A$ in their intents by extensivity. But this is a contradiction, since $\dminO{A}$ is defined to be the minimal objects with $A$ in their intent, there can be no objects minimal $\minO{A}$ which also have $A$ in their intents.
-
+  \textbf{Idempotency:}
+  \begin{quotation}
+    \noindent The proof for idempotency follows from extensivity. Given some $A \subseteq M$, $\dminO{A}$ represents attributes of the minimal objects satisfying $A$. If $\dminO{A} \not =\dminO{(\dminO{A})}$, then we would have that there were some new minimal objects in $\minO{(\dminO{A})}$, these objects would all have $A$ in their intents by extensivity. But this is a contradiction, since $\dminO{A}$ is defined to be the minimal objects with $A$ in their intent, there can be no objects minimal $\minO{A}$ which also have $A$ in their intents.
+  \end{quotation}
 \end{proof}
 
+\clearpage
 \section{Defeasible Implications}
-\subsection{Normal Implications}
-Conventionally, we define an implication $A\rightarrow B$ between two sets of attributes $A,B \subseteq M$. An implication is respected\footnote{being \textit{respected} is analagous to being entailed} in a formal context iff
+\subsection{Normal implications}
+Conventionally, we define an implication $A\rightarrow B$ between two sets of attributes $A,B \subseteq M$. An implication is respected \footnote{being \textit{respected} is analagous to being entailed} in a formal context iff
 
 \begin{itemize}
   \item $B \subseteq A''$
@@ -145,12 +148,12 @@ In $\K = (G,M,I, <)$, we define a defeasible implication $A \twiddle B$, where $
 
 The motivation behind this style of implication is to convey a type of consequence that may not exist in the entire context, but holds for at least the preferred object(s).
 
-\subsubsection{Incomparible Objects}
+\subsubsection{Incomparible objects}
 
 As defined, the $A \twiddle B$ relation relies on the notion of minimal objects derived through the minimisation operation $\minO{A}$. This raises (at least) two important questions; how do we deal with incomparible objects? And, what happens if the set of minimal objects is empty?
 
 The first question is straightforward, and is actually handled in the definition of the operator found in \autoref{subsection:properties-min-operator}. If there are incomparible objects in $\minO{A}$, we take the intersection of all object intents, giving us
-\[\dminO{A} := \cap \{a' | a \in A\}\]
+\[\dminO{A} := \cap \{a' | a \in \minO{A}\}\]
 
 If the set of minimal objects $\minO{A}$ is empty, we say that $\dminO{A} = M$; this holds vacuously - there are no objects in $\minO{A}$, so (glossing over exact details) every object has every attribute.
 
@@ -173,9 +176,9 @@ Given the defeasible context $\K$, with $o_1 < o_2$
 
 If we refer again to \autoref{fig:small-defeasible-context}, we could see that the implication $\{\texttt{wheels, engine}\} \twiddle \{\texttt{drive}\}$ is respected by $o_1$, and $o_1 < o_2$, but $\K$ does not respect $\{\texttt{wheels, engine}\} \ntwiddle \{\texttt{drive}\}$. This might seem unintuitive, \textit{the implication holds in our most preferred objects, after all}.
 
-However, this is consistent with preferential consequence relations.
+While this discomfort makes sense from the lens of classical logics, where we understand the material implication $\alpha \rightarrow \beta$ to be equivalent to $\neg \alpha \lor \beta$, when we use $\twiddle$ we are shifting into the realm of conditional logics. Now, a conditional ($\twiddle$) is assertable if its antecedent being true entails its consequent \cite{sep-logic-conditionals}.
 
-From \cite{kaliski2020overview}, $4.2$ Preferential Entailment:
+This is illustrated in \cite{kaliski2020overview}, $4.2$ Preferential Entailment, where preferential consequence relations are introduced:
 \begin{quotation}
   A preferential interpretation $\mathcal{P}$ is a tripple $\langle S, l, \pref \rangle$ with $S$ being a set of states, l:S$\mapsto \mathcal{U}$ is a function mapping states to valuations, and $\pref$ a preorder on $S$. For every $\alpha \in \mathcal{L}$ and some $\mathcal{P}$, let $\llbracket \alpha \rrbracket^{\mathcal{P}}:= \{s\in S, S\in \mathcal{P}, l(s) \Vdash \alpha\}$. In other words, let $\llbracket \alpha \rrbracket^{\mathcal{P}}$ be the set of all states in $\mathcal{P}$ such that the valuation associated with each state satisfies $\alpha$.
 \end{quotation}
@@ -185,16 +188,21 @@ And also,
   Given a preferential interpretation $\mathcal{P} = \langle S, l, \pref \rangle$ and $\alpha, \beta \in \mathcal{L}$, then $\mathcal{P}$ defines a preferential consequence relation $\twiddle_{\mathcal{P}}$ such that $\alpha \twiddle_{\mathcal{P}} \beta$ iff for any $s$ minimal in $\llbracket \alpha \rrbracket^{\mathcal{P}}, s \Vdash \beta$.
 \end{quotation}
 
-[\textit{I would like to have a discussion with Tommie about why this is the case, it is essential for the Rational Closure algorithm, but there should be more substantial justification}]
-
 \section{Properties of Implication using minimisation operator}
 \subsection{KLM Postulates}
 
 These are some of the KLM postulates, described in \cite{kaliski2020overview}. Reflexivity is another postulate, which has been left our for now for brevity. The \textit{Or} postulate was also omitted, since there is no notion of disjunction in FCA.
+\begin{equation}
+  A \twiddle A \qquad \textbf{(Reflexivity)}
+\end{equation}
 
-\begin{theorem}[Left Logical Equivalence (LLE)]
-  If $A \leftrightarrow B$ and $A \twiddle C$, then $B \twiddle C$.
-\end{theorem}
+\begin{proof}
+  All we require is that $\minO{A} \subseteq \minO{A}$, obviously we have this.
+\end{proof}
+
+\begin{equation}
+  \frac{A \leftrightarrow B, A \twiddle C}{B \twiddle C} \qquad \textbf{(Left-Logical Equivalence)}
+\end{equation}
 
 \begin{proof}
   Let $A, B, C \subseteq M$.
@@ -206,9 +214,9 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   \end{enumerate}
 \end{proof}
 
-\begin{theorem}[Right Weakening (RW)]
-  If $A \rightarrow B$ and $C \twiddle A$, then $C \twiddle B$.
-\end{theorem}
+\begin{equation}
+  \frac{A \rightarrow B, C \twiddle A}{C \twiddle B} \qquad \textbf{(Right Weakening)}
+\end{equation}
 
 \begin{proof}
   Let $A, B, C \subseteq M$.
@@ -219,7 +227,7 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
     \item Therefore, $C \twiddle B$ \hfill (By definition of $\twiddle$)
   \end{enumerate}
 \end{proof}
-\clearpage
+
 \begin{lemma}
   For any $A, B \subseteq M$, $A' \cap B' = (A \cup B)'$.
 \end{lemma}
@@ -248,9 +256,9 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   \end{enumerate}
 \end{proof}
 
-\begin{theorem}[And]
-  If $A \twiddle B$ and $A \twiddle C$, then $A \twiddle (B \cup C)$.
-\end{theorem}
+\begin{equation}
+  \frac{A \twiddle B, A \twiddle C}{A \twiddle (B \cup C)} \qquad \textbf{(And)}
+\end{equation}
 
 \begin{proof}
   Let $A \twiddle B$ and $A \twiddle C$ with $A, B, C \subseteq M$
@@ -268,7 +276,6 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
 \end{lemma}
 
 \begin{proof}
-
   \begin{enumerate}
     \item $\minO{A} \subseteq A'$ \hfill (Definition of minimisation)
     \item $\minO{A} \subseteq B'$ \hfill (Given that $A \twiddle B$)
@@ -333,9 +340,9 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
 
 % \end{proof}
 
-\begin{theorem}[Cautious Monotonicity (CM)]
-  If $A \twiddle B$ and $A \twiddle C$, then $(A \cup B) \twiddle C$.
-\end{theorem}
+\begin{equation}
+  \frac{A \twiddle B, A \twiddle C}{(A \cup B) \twiddle C} \qquad \textbf{(Cautious Monotonicity)}
+\end{equation}
 
 \begin{proof}
   Let $A, B, C \subseteq M$.
@@ -357,6 +364,20 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   Cautious monotonicity stipulates that when given new information, if that information could have been inferred before, then it should not be inconsistent with earlier inferences. Monotonicity requires that any new knowledge not invalidate existing knowledge; CM weakens this requirement to be that only pieces of knowledge inferred from the same existing knowledge should not invalidate one another.
 \end{remark}
 
+\begin{equation}
+  \frac{A \twiddle B, A \ntwiddle \neg C}{A \cup C \twiddle B} \qquad \textbf{(Rational Monotonicity)}
+\end{equation}
+
+\clearpage
+\section{Minimal Concepts}
+\subsection{Using the minimisation operator to define minimal concepts}
+In the standard case, a concept of some formal context $\mathbb{K}$ is a pair $(A,B)$ where $A' = B$ and $A = B'$ where $A\subseteq G$ and $B\subseteq M$. We can also see that for some $B \subseteq M$, $(B', B'')$ is a formal concept.
+
+Using the minimisation operator, we introduce a \textit{minimal formal concept} $(A,B)$ with $A = \minO{B}$ and $A' = B$. That is, a minimal formal concept $(A,B)$ is a formal concept where the set of minimal objects which have $B$ in their intent are precisely $A$, and the intersection of object intents of all objects in $A$ is precisely the set $B$.
+
+\subsection{Ordering on minimal concepts}
+
+If $(A_1, B_1)$ and $(A_2, B_2)$ are concepts of a formal context, $(A_1,B_1)$ is a subconcept $(\leq)$ of $(A_2, B_2)$ provided that $A_1 \subseteq A_2$ (equivalently, $B_1 \supseteq B_2)$.
 
 \section{Questions}
 \subsection{Is every material implication a defeasible implication?}
