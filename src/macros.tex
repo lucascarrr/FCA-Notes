@@ -89,7 +89,7 @@
 \newcommand{\solve}[1]{\setlength{\paraindent}{0cm}\textbf{\textit{Solution: }}\setlength{\parindent}{1cm}#1 \Qed}
 
 \newcommand{\middleline}{
-      \par\noindent\raisebox{.5\baselineskip}{\makebox[\linewidth]{\rule{0.5\textwidth}{0.4pt}}}\par
+  \par\noindent\raisebox{.5\baselineskip}{\makebox[\linewidth]{\rule{0.5\textwidth}{0.4pt}}}\par
 }
 
 \newcommand{\calC}{\mathcal{C}}
@@ -382,21 +382,20 @@
 \newcommand{\dsrel}{\leadsto}
 \newcommand{\ndsrel}{\not\dsrel}
 \newcommand{\D}{\ensuremath{\mathcal{D}}} % a defeasible TBox
-\newcommand{\K}{\widetilde{\mathbb{K}}}
 \newcommand{\Rs}{\mathscr{R}} % set of ranked models with same classical \I
 \newcommand{\X}{\mathcal{X}} % variable for defeasible entailment subscript
 \newcommand{\generalent}{\entails_{\X}} %subscripted entailment, based on variable \X
 
 % Definitions for flag and flame (defeasible modal operators):
 \newcommand*{\myleftmid}{%
-      \mathrel{\vcenter{\offinterlineskip
-                  \vskip-0.25ex\hbox{$\shortmid$}}}}
+  \mathrel{\vcenter{\offinterlineskip
+      \vskip-0.25ex\hbox{$\shortmid$}}}}
 \newcommand*{\myrightmid}{%
-      \mathrel{\vcenter{\offinterlineskip
-                  \vskip-0.7ex\hbox{$\shortmid$}}}}
+  \mathrel{\vcenter{\offinterlineskip
+      \vskip-0.7ex\hbox{$\shortmid$}}}}
 \newcommand*{\twosim}{%
-      \mathrel{\vcenter{\offinterlineskip
-                  \vskip0.05ex\hbox{$\sim$}\vskip0.25ex\hbox{$\sim$}}}}
+  \mathrel{\vcenter{\offinterlineskip
+      \vskip0.05ex\hbox{$\sim$}\vskip0.25ex\hbox{$\sim$}}}}
 \newcommand{\bartwosim}{\mathrel{\myleftmid}\hskip-0.03ex\joinrel\twosim}
 % Defeasible necessity:
 \newcommand{\dnec}{\mathrel{\bartwosim}\hskip-.05ex\joinrel\myrightmid}
@@ -443,25 +442,28 @@
 \newsavebox{\WhiteRoundedBox}
 \newenvironment{WhiteBox}[1][\dimexpr\textwidth-4.5ex]%
 {\setlength{\RoundedBoxWidth}{\dimexpr#1}
-      \begin{lrbox}{\WhiteRoundedBox}
-            \begin{minipage}{\RoundedBoxWidth}}%
-                  {   \end{minipage}
-      \end{lrbox}
-      \begin{center}
-            \begin{tikzpicture}%
-                  \draw node[draw=Orange,fill=white,rounded corners,line width=1.5pt,%
-                        inner sep=0.7ex,text width=\RoundedBoxWidth]%
-                  {\usebox{\WhiteRoundedBmeaningox}};
-            \end{tikzpicture}
-      \end{center}}
+  \begin{lrbox}{\WhiteRoundedBox}
+    \begin{minipage}{\RoundedBoxWidth}}%
+      {   \end{minipage}
+  \end{lrbox}
+  \begin{center}
+    \begin{tikzpicture}%
+      \draw node[draw=Orange,fill=white,rounded corners,line width=1.5pt,%
+        inner sep=0.7ex,text width=\RoundedBoxWidth]%
+      {\usebox{\WhiteRoundedBmeaningox}};
+    \end{tikzpicture}
+  \end{center}}
 
 \newcommand{\cass}[2]{\mbox{$#1:#2$}}
 \newcommand{\rass}[3]{\mbox{$(#1,#2):#3$}}
-\newcommand{\underlinesymbol}[1]{\underline{#1}}
-\newcommand{\minO}[1]{\underlinesymbol{#1}'}
-\newcommand{\dminO}[1]{\underlinesymbol{#1'}'}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End macro definitions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\underlinesymbol}[1]{\underline{#1}}
+\newcommand{\K}{\widetilde{\mathbb{K}}} % defeasible formal context
+\newcommand{\Kc}{\mathcal{B}(\K)}
+\newcommand{\Tc}{\mathcal{T}(\K)}
+\newcommand{\minO}[1]{\underlinesymbol{#1}'} % single minimisation
+\newcommand{\dminO}[1]{\underlinesymbol{#1'}'} % double minimisation 

@@ -1,4 +1,20 @@
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Lattices}{2}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Supremum and infimum}{2}{subsubsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.2}Formal Contexts}{2}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Formal Concepts}{2}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.3}Formal Concepts}{3}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Concept Hierarchies}{3}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}The Basic Theorem}{3}{subsection.1.5}%
+\contentsline {subsubsection}{\numberline {1.5.1}I}{3}{subsubsection.1.5.1}%
+\contentsline {subsubsection}{\numberline {1.5.2}II}{4}{subsubsection.1.5.2}%
+\contentsline {section}{\numberline {2}Closure Systems}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Defining a Closure System}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Closure Operators}{6}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Implications}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Introduction}{7}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Implications in a Formal Context}{7}{subsubsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.2}Sets of Implications}{8}{subsection.3.2}%
+\contentsline {paragraph}{Proof:}{8}{subsection.3.2}%
+\contentsline {paragraph}{Proof:}{8}{Item.13}%
+\contentsline {subsection}{\numberline {3.3}When does an implication follow from other ones?}{9}{subsection.3.3}%
+\contentsline {paragraph}{Proof:}{9}{subsection.3.3}%

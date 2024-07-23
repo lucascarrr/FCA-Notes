@@ -228,6 +228,10 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   \end{enumerate}
 \end{proof}
 
+\begin{equation}
+  \frac{A \cup B \twiddle C, A \twiddle B}{A \twiddle C} \qquad \textbf{(Cut)}
+\end{equation}
+
 \begin{lemma}
   For any $A, B \subseteq M$, $A' \cap B' = (A \cup B)'$.
 \end{lemma}
@@ -279,66 +283,32 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   \begin{enumerate}
     \item $\minO{A} \subseteq A'$ \hfill (Definition of minimisation)
     \item $\minO{A} \subseteq B'$ \hfill (Given that $A \twiddle B$)
-    \item $\minO{A} \subseteq (A \cup B)'$ \hfill (1,2, Lemma 3.3)
+    \item $\minO{A} \subseteq A' \cap B'$ \hfill (1,2)
+    \item $\minO{A} \subseteq (A \cup B)'$ \hfill (3, Lemma 3.3)
     \item $(A \cup B)' \subseteq A'$ \hfill (Set Theory)
     \item $\minO{A} \subseteq (A \cup B)' \subseteq A'$ \hfill (3,4)
   \end{enumerate}
-  I am not quite sure how to finish off this proof, but you can see that objects in $\minO{A}$ are all in $(A\cup B)'$. Additionally, all the objects in $(A\cup B)'$ are in $A'$. There should be some transitivity for minimality. Diagram below illustrates this notion. I.e. the minimal objects in $(A \cup B)'$ are preciely $\minO{A}$, or $\minO{A} = \minO{(A\cup B)}$.
+
+  With this in mind, let $g$ be some element of $\minO{A}$. By definition, there is no element $h$ in $A'$ such that $h < g$. Then, because of $5$, there is no element $h$ in $(A\cup B)'$ such that $h < g$. From this, it follows that $\minO{A} \subseteq \minO{(A \cup B)}$.
+
+  What is left is to show that $\minO{(A\cup B)} \subseteq \minO{A}$. Let $g \in \minO{(A\cup B)}$ and $g \not \in \minO{A}$. Since $\minO{A} \subseteq \minO{(A\cup B)}$, $\nexists h \in \minO{A}$ such that $h < g$.
+
   \begin{center}
     \begin{tikzpicture}[scale=1]
-      % Draw the circles
       \draw (0,0) circle (2cm) node at (-1,1.5) {$A'$};
       \draw (1,0) circle (2cm) node at (2,1.5) {$B'$};
 
-      % Shade the bottom portion of the intersection
       \begin{scope}
         \clip (0,0) circle (2cm);
         \clip (1,0) circle (2cm);
         \fill[pattern=north west lines, pattern color=gray!60, opacity=1] (-1,-2) rectangle (2,-0.5);
       \end{scope}
 
-      % Add label for the shaded area
       \node at (0.5,-0.725) {$\minO{A}$};
-
-      % Add label in the intersection
       \node at (0.5,0.7) {$(A \cup B)'$};
     \end{tikzpicture}
   \end{center}
 \end{proof}
-
-% \begin{proof} We will show $\minO{A} \subseteq \minO{(A\cup B)}$ and $\minO{A} \supseteq \minO{(A\cup B)}$
-
-%   $\minO{A} \subseteq \minO{(A\cup B)}$:
-
-%   Let $g \in \minO{A}$
-%   \begin{enumerate}
-%     \item $\minO{A} \subseteq A'$ \hfill  (Definition of minimisation)
-%     \item $\minO{A} \subseteq B'$ \hfill (Given $A \twiddle B$)
-%     \item $\minO{A} \subseteq (A \cup B)'$ \hfill (1,2, Lemma 3.3)
-%           % \item $B \subseteq g'$ \hfill (4, Given $g \in \minO{A}$)
-%     \item $\nexists h \in A'$ such that $ h < g$ \hfill (Definition of $\minO{A}$)
-%           % \item $\nexists h \in G$ such that $h < g$ and $A \subseteq h'$ \hfill (5,6, By construction of $\minO{A}$)
-%           % \item $\forall a \in \minO{(A \cup B)}, a \in A'$ \hfill(Definition of $\minO{(A\cup B)}$)
-%     \item $\minO{(A\cup B)} \subseteq (A \cup B)' \subseteq A'$ \hfill (See)
-%     \item $\nexists a \in \minO{(A \cup B)}$ with $a < g$ \hfill (4,5)
-%     \item $g \in (A \cup B)'$ \hfill (Given: $g\in \minO{A}$, 3)
-%           % \item $\minO{(A \cup B)} \subseteq (A \cup B)'$ \hfill (Definition of minimisation)
-%     \item $g \in \minO{(A \cup B)}$ \hfill (6,7, Definition of $\minO{(A \cup B)}$)
-%     \item $g$ is an arbitray element in $\minO{A}$, so $\minO{A} \subseteq \minO{(A \cup B)}$
-%   \end{enumerate}
-
-%   $\minO{A} \supseteq \minO{(A\cup B)}:$
-
-%   Let $g \in \minO{(A \cup B)}$
-%   \begin{enumerate}
-%     \item $\minO{A} \subseteq B'$ \hfill (Given $A\twiddle B$)
-%     \item $\minO{A} \subseteq A'$ \hfill (Definition of minimisation)
-%     \item $\minO{A} \subseteq (A\cup B)'$ \hfill (1,2, Lemma 3.3)
-%     \item $\nexists h \in (A \cup B)'$ such that $h < g$ \hfill (Definition of $\minO{(A \cup B)}$)
-%     \item $\nexists a \in \minO{A}$ such that $a < g$ \hfill (3,4)
-%   \end{enumerate}
-
-% \end{proof}
 
 \begin{equation}
   \frac{A \twiddle B, A \twiddle C}{(A \cup B) \twiddle C} \qquad \textbf{(Cautious Monotonicity)}
@@ -368,20 +338,58 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   \frac{A \twiddle B, A \ntwiddle \neg C}{A \cup C \twiddle B} \qquad \textbf{(Rational Monotonicity)}
 \end{equation}
 
-\clearpage
-\section{Minimal Concepts}
-\subsection{Using the minimisation operator to define minimal concepts}
-In the standard case, a concept of some formal context $\mathbb{K}$ is a pair $(A,B)$ where $A' = B$ and $A = B'$ where $A\subseteq G$ and $B\subseteq M$. We can also see that for some $B \subseteq M$, $(B', B'')$ is a formal concept.
+\section{Typical Concepts}
 
-Using the minimisation operator, we introduce a \textit{minimal formal concept} $(A,B)$ with $A = \minO{B}$ and $A' = B$. That is, a minimal formal concept $(A,B)$ is a formal concept where the set of minimal objects which have $B$ in their intent are precisely $A$, and the intersection of object intents of all objects in $A$ is precisely the set $B$.
+The partial order over objects in a formal context was introduced as some kind of preference, or typicality between objects. It is quite intuitive that if there are typical objects, then there may be typical concepts too.
 
-\subsection{Ordering on minimal concepts}
+\begin{figure}[h]
+  \begin{center}
+    \begin{tabular}{r|cccc}
+            & \texttt{m1} & \texttt{m2} & \texttt{m3} \\ \hline
+      $o_1$ & $\times$    &             & $\times$    \\
+      $o_2$ &             & $\times$    & $\times$    \\
+      $o_3$ & $\times$    & $\times$    & $\times$    \\
+      $o_4$ &             & $\times$    &             \\
+    \end{tabular}
+  \end{center}
+  \caption{Defeasible Formal Context, with the order $o_1 < o_2, o_3, o_4$}
+  \label{fig:defeasible-context}
+\end{figure}
 
-If $(A_1, B_1)$ and $(A_2, B_2)$ are concepts of a formal context, $(A_1,B_1)$ is a subconcept $(\leq)$ of $(A_2, B_2)$ provided that $A_1 \subseteq A_2$ (equivalently, $B_1 \supseteq B_2)$.
+\subsection{As sets of objects which agree with their minimals}
+An initial attempt to formalise the notion of a typical concept defines it as a pair of an extent and intent. Specifically, $((\minO{B})'', (\minO{B})')$, where $B \subseteq M$. \footnote{This notation is unintuitive, but it will be done away with in the next section} This characterisation of a \textit{typical} is familiar, and has some desirable properties. It looks familiar because it is in fact a regular formal concept. If we have a set of objects from a formal context, $A \subset G$, then $(A'', A')$ is a formal concept of this context. Since $\minO{B}, B\subseteq M$ can be thought of as simply a set of objects in $G$, the typical concept defined above is simply a regular concept derived from a starting point of minimal objects.
 
-\section{Questions}
-\subsection{Is every material implication a defeasible implication?}
-If we have a defeasible formal context $\K = (G,M,I,<)$ where $A,B\subseteq M$ and $A\rightarrow B$ is a valid implication over $M$, does $A \twiddle B$ hold in $\K$?
+However, the intention behind introducing a notion of a typical concept would be to see what type of structure the set of typical concepts has for some defeasible context. That is, for some $\K = (G,M,I,\preceq)$ the set of all regular concepts $\Kc$ is isomorphic to some concept lattice. The point of interest is, what structure does the set of typical concepts $\Tc$ have?
+
+It turns out, that the set of typical concepts derived from the formal context $\K = (G,M,I,\preceq)$ from \autoref{fig:hasse-diagram-defeasible-context} is not a lattice.
+
+\begin{figure}[h]
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm]
+      \node (a) at (-2,-1) {$\frac{\texttt{m1, m3}}{o_1, o_3}$};
+      \node (c) at (2, -1) {$\frac{\texttt{m2, m3}}{o_2, o_3}$};
+
+      \node (f) at (2, 1) {$\frac{\texttt{m2}}{o_2, o_3, o_4}$};
+
+      \node (bottom) at (0,-3) {$\frac{\texttt{m1, m2, m3}}{o_3}$};
+
+      \draw (bottom) -- (a);
+      \draw (bottom) -- (c);
+      \draw (c) -- (f);
+    \end{tikzpicture}
+  \end{center}
+  \caption{Hasse Diagram for $\mathcal{T} (G,M,I, \preceq)$}
+  \label{fig:hasse-diagram-defeasible-context}
+\end{figure}
+
+\subsection{Restriction on the order}
+
+For a defeasible context $\K = (G,M,I,\preceq)$, the partial ordering is restricted to only those orders such that for any $B \subseteq M$, $\minO{B} \equiv (\minO{B})''$ we avoid the issues in \autoref{fig:hasse-diagram-defeasible-context}. We also get an improved notation for a typical concept being, for some $B\subseteq M$, $(\minO{B}, (\minO{B})')$.
+
+
+
+\subsection{Mapping from formal concepts to typical concepts}
+
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}  % the name of your .bib file

@@ -48,38 +48,38 @@
 
 \maketitle
 
-\begin{center}   
-    \begin{tikzpicture}[node distance=2cm]
-        \node (top) at (0,0) {$1$};
+\begin{center}
+  \begin{tikzpicture}[node distance=2cm]
+    \node (top) at (0,0) {$1$};
 
-        \node (a) at (-2,-2) {$a$};
-        \node (b) at (0, -2) {$b$};
-        \node (c) at (2, -2) {$c$};
+    \node (a) at (-2,-2) {$a$};
+    \node (b) at (0, -2) {$b$};
+    \node (c) at (2, -2) {$c$};
 
-        \node (d) at (-2, -1) {$d$}; 
-        \node (e) at (0, -1) {$e$}; 
-        \node (f) at (2, -1) {$f$}; 
+    \node (d) at (-2, -1) {$d$};
+    \node (e) at (0, -1) {$e$};
+    \node (f) at (2, -1) {$f$};
 
-        \node (bottom) at (0,-3) {$0$};
+    \node (bottom) at (0,-3) {$0$};
 
-        \draw (bottom) -- (a); 
-        \draw (bottom) -- (b); 
-        \draw (bottom) -- (c);
-        
-        \draw (a) -- (e); 
-        \draw (c) -- (e);
+    \draw (bottom) -- (a);
+    \draw (bottom) -- (b);
+    \draw (bottom) -- (c);
 
-        \draw (a) -- (d); 
-        \draw (b) -- (d);
-        
-        \draw (b) -- (f); 
-        \draw (c) -- (f);
+    \draw (a) -- (e);
+    \draw (c) -- (e);
 
-        \draw (d) -- (top); 
-        \draw (e) -- (top); 
-        \draw (f) -- (top);
-        
-    \end{tikzpicture}
+    \draw (a) -- (d);
+    \draw (b) -- (d);
+
+    \draw (b) -- (f);
+    \draw (c) -- (f);
+
+    \draw (d) -- (top);
+    \draw (e) -- (top);
+    \draw (f) -- (top);
+
+  \end{tikzpicture}
 \end{center}
 
 \tableofcontents
