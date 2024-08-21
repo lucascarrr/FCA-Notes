@@ -69,7 +69,7 @@ We introduce a variation on these two operators, which has the same set building
   \underline{B^{\downarrow}} & := Min(B^{\downarrow})                    & B \subseteq M
 \end{align*}
 
-When applied to a set of objects $A \subseteq G$, the minimisation operator removes all non-minimal elements from $A$, and then takes $A^{\uparrow}$. This gives us the set of attributes common to all minimal objects from $A$. Conversely, when applied to a set of atttributes $B \subseteq M$, the minimisation operator takes $B^{\downarrow}$, and removes all non-minimal objects, leaving the minimal objects which have all the attributes from $B$ in their object intents.
+When applied to a set of objects $A \subseteq G$, the minimisation operator removes all non-minimal elements from $A$, and then takes $A^{\uparrow}$. This gives us the set of attributes common to all minimal objects from $A$. Conversely, when applied to a set of attributes $B \subseteq M$, the minimisation operator takes $B^{\downarrow}$, and removes all non-minimal objects, leaving the minimal objects which have all the attributes from $B$ in their object intents.
 
 Given a set of attributes $B \subseteq M$, we can determine $\underline{(\underline{B^{\downarrow}})^{\uparrow}}$ (although, this double minimisation is not strictly necessary, when applying the operator twice on an initial set of attributes $B\subseteq M$, we will omit the double minimisation, giving us $\dminO{B}$). This constructs the set of attribute which are common to all minimal objects which have $B$ in their object intents. We make this clear with an example
 
@@ -188,6 +188,7 @@ And also,
   Given a preferential interpretation $\mathcal{P} = \langle S, l, \pref \rangle$ and $\alpha, \beta \in \mathcal{L}$, then $\mathcal{P}$ defines a preferential consequence relation $\twiddle_{\mathcal{P}}$ such that $\alpha \twiddle_{\mathcal{P}} \beta$ iff for any $s$ minimal in $\llbracket \alpha \rrbracket^{\mathcal{P}}, s \Vdash \beta$.
 \end{quotation}
 
+\clearpage
 \section{Properties of Implication using minimisation operator}
 \subsection{KLM Postulates}
 
@@ -338,6 +339,7 @@ These are some of the KLM postulates, described in \cite{kaliski2020overview}. R
   \frac{A \twiddle B, A \ntwiddle \neg C}{A \cup C \twiddle B} \qquad \textbf{(Rational Monotonicity)}
 \end{equation}
 
+\clearpage
 \section{Typical Concepts}
 
 The partial order over objects in a formal context was introduced as some kind of preference, or typicality between objects. It is quite intuitive that if there are typical objects, then there may be typical concepts too.
@@ -345,52 +347,137 @@ The partial order over objects in a formal context was introduced as some kind o
 \begin{figure}[h]
   \begin{center}
     \begin{tabular}{r|cccc}
-            & \texttt{m1} & \texttt{m2} & \texttt{m3} \\ \hline
-      $o_1$ & $\times$    &             & $\times$    \\
-      $o_2$ &             & $\times$    & $\times$    \\
-      $o_3$ & $\times$    & $\times$    & $\times$    \\
-      $o_4$ &             & $\times$    &             \\
+            & \texttt{m1} & \texttt{m2} & \texttt{m3} & \texttt{m4} \\ \hline
+      $o_1$ & $\times$    &             & $\times$    &             \\
+      $o_2$ &             & $\times$    & $\times$    &             \\
+      $o_3$ & $\times$    & $\times$    & $\times$    &             \\
+      $o_4$ &             & $\times$    &             & $\times$    \\
     \end{tabular}
   \end{center}
-  \caption{Defeasible Formal Context, with the order $o_1 < o_2, o_3, o_4$}
-  \label{fig:defeasible-context}
+  \caption{Defeasible Formal Context, with the order $o_2 < o_4, o_3 < o_4$}
+  \label{fig:defeasible-context-counter-example}
 \end{figure}
 
-\subsection{As sets of objects which agree with their minimals}
-An initial attempt to formalise the notion of a typical concept defines it as a pair of an extent and intent. Specifically, $((\minO{B})'', (\minO{B})')$, where $B \subseteq M$. \footnote{This notation is unintuitive, but it will be done away with in the next section} This characterisation of a \textit{typical} is familiar, and has some desirable properties. It looks familiar because it is in fact a regular formal concept. If we have a set of objects from a formal context, $A \subset G$, then $(A'', A')$ is a formal concept of this context. Since $\minO{B}, B\subseteq M$ can be thought of as simply a set of objects in $G$, the typical concept defined above is simply a regular concept derived from a starting point of minimal objects.
+% \subsection{As sets of objects which agree with their minimals}'
 
-However, the intention behind introducing a notion of a typical concept would be to see what type of structure the set of typical concepts has for some defeasible context. That is, for some $\K = (G,M,I,\preceq)$ the set of all regular concepts $\Kc$ is isomorphic to some concept lattice. The point of interest is, what structure does the set of typical concepts $\Tc$ have?
+% \begin{figure}[h]
+%   \begin{center}
+%     \begin{tikzpicture}[node distance=2cm]
+%       \node (a) at (-2,-1) {$\frac{\texttt{m1, m3}}{o_1, o_3}$};
+%       \node (c) at (2, -1) {$\frac{\texttt{m2, m3}}{o_2, o_3}$};
 
-It turns out, that the set of typical concepts derived from the formal context $\K = (G,M,I,\preceq)$ from \autoref{fig:hasse-diagram-defeasible-context} is not a lattice.
+%       \node (f) at (2, 1) {$\frac{\texttt{m2}}{o_2, o_3, o_4}$};
+
+%       \node (bottom) at (0,-3) {$\frac{\texttt{m1, m2, m3}}{o_3}$};
+
+%       \draw (bottom) -- (a);
+%       \draw (bottom) -- (c);
+%       \draw (c) -- (f);
+%     \end{tikzpicture}
+%   \end{center}
+%   \caption{Hasse Diagram for $\mathcal{T} (G,M,I, \preceq)$}
+%   \label{fig:hasse-diagram-defeasible-context}
+% \end{figure}
+
+% An initial attempt to formalise the notion of a typical concept defines it as a pair of an extent and intent. Specifically, $((\minO{B})'', (\minO{B})')$, where $B \subseteq M$. \footnote{This notation is unintuitive, but it will be done away with in the next section}
+% This characterisation of a \textit{typical} is familiar, and has some desirable properties. It looks familiar because it is in fact a regular formal concept. If we have a set of objects from a formal context, $A \subset G$, then $(A'', A')$ is a formal concept of this context. Then a typical concept is a concept that does not have any non-minimal objects in the concept extent.
+
+% % Since $\minO{B}, B\subseteq M$ can be thought of as simply a set of objects in $G$, the typical concept defined above is simply a regular concept derived from a starting point of minimal objects.
+% However, the intention behind introducing a notion of a typical concept would be to see what type of structure the set of typical concepts has for some defeasible context. That is, for some $\K = (G,M,I,\preceq)$ the set of all regular concepts $\Kc$ is isomorphic to some concept lattice. The point of interest is, what structure does the set of typical concepts $\Tc$ have?
+
+% It turns out, that the set of typical concepts derived from the formal context $\K = (G,M,I,\preceq)$ from \autoref{fig:hasse-diagram-defeasible-context} is not a lattice.
+
+\subsection{Restriction on the order}
+
+For a defeasible context $\K = (G,M,I,\preceq)$, the partial ordering is restricted to only those orders such that for any $B \subseteq M$, $\minO{B} \equiv (\minO{B})''$. We also get an improved notation for a typical concept being, for some $B\subseteq M$, $(\minO{B}, (\minO{B})')$.
+
+If we abstract away from concepts, this restriction on $\preceq$ says that for any set $B\subseteq M$, let $A := \bigcap \{g' | g \in \minO{A}\}$. Then $\preceq$ is a valid partial order if there exists no $h \in G$ such that $A \subseteq h'$ and $h \not \in \minO{A}$.
+
+\begin{center}
+  \begin{tabular}{r@{\hspace{0.2cm}}|cccc}
+                   & \texttt{ $a_1$} & \texttt{ $a_2$} & \texttt{ $a_3$} & \texttt{ $a_4$} \\ \hline
+    \texttt{$o_1$} & $\times$        & $\times$        &                 & $\times$        \\[0.2em]
+    \texttt{$o_2$} &                 &                 & $\times$        &
+  \end{tabular}
+\end{center}
 
 \begin{figure}[h]
   \begin{center}
     \begin{tikzpicture}[node distance=2cm]
-      \node (a) at (-2,-1) {$\frac{\texttt{m1, m3}}{o_1, o_3}$};
-      \node (c) at (2, -1) {$\frac{\texttt{m2, m3}}{o_2, o_3}$};
 
-      \node (f) at (2, 1) {$\frac{\texttt{m2}}{o_2, o_3, o_4}$};
+      \node[text opacity=0.5] (top) at (2,3) {$\frac{\emptyset}{o_1, o_2, o_3, o_4}$};
+      \node (a) at (0, 1) {$\frac{\texttt{m3}}{o_1, o_2, o_3}$};
+      \node[text opacity=0.5] (b) at (4, 1) {$\frac{\texttt{m2}}{o_2, o_3, o_4}$};
+      \draw[dotted] (a) -- (top);
+      \draw[dotted] (b) -- (top);
 
-      \node (bottom) at (0,-3) {$\frac{\texttt{m1, m2, m3}}{o_3}$};
+      \node (c) at (-2, -1) {$\frac{\texttt{m1,m3}}{o_1, o_3}$};
+      \node (d) at (2, -1) {$\frac{\texttt{m2,m3}}{o_2, o_3}$};
+      \node (e) at (6, -1) {$\frac{\texttt{m2,m4}}{o_4}$};
+      \draw (c) -- (a);
+      \draw (d) -- (a);
+      \draw[dotted] (d) -- (b);
+      \draw[dotted] (e) -- (b);
 
-      \draw (bottom) -- (a);
-      \draw (bottom) -- (c);
-      \draw (c) -- (f);
+      \node (f) at (0, -3) {$\frac{\texttt{m1, m2,m3}}{o_3}$};
+      \draw (f) -- (c);
+      \draw (f) -- (d);
+
+      \node (g) at (2, -5) {$\frac{\texttt{m1, m2,m3, m4}}{\emptyset}$};
+      \draw (g) -- (f);
+      \draw (g) -- (e);
+
+      % \node (a) at (-2,-1) {$\frac{\texttt{m1, m3}}{o_1, o_3}$};
+      % \node (c) at (2, -1) {$\frac{\texttt{m2, m3}}{o_2, o_3}$};
+      % \node (f) at (0, 1) {$\frac{\texttt{m3}}{o_1, o_2, o_3}$};
+      % \node (bottom) at (0,-3) {$\frac{\texttt{m1, m2, m3}}{o_3}$};
+
+      % \node[text opacity=0.5] (t) at (2,3) {$\frac{\emptyset}{o_1, o_2, o_3, o_4}$};
+      % \node[text opacity=0.5] (r) at (4, 1) {$\frac{\texttt{m2}}{o_2, o_3, o_4}$};
+      % \draw[dotted] (t) -- (f);
+      % \draw[dotted] (t) -- (r);
+      % \draw[dotted] (r) -- (c);
+
+      % \draw (bottom) -- (a);
+      % \draw (bottom) -- (c);
+      % \draw (a) -- (f);
+      % \draw (c) -- (f);
     \end{tikzpicture}
   \end{center}
-  \caption{Hasse Diagram for $\mathcal{T} (G,M,I, \preceq)$}
-  \label{fig:hasse-diagram-defeasible-context}
+  \caption{Typical Concept Lattice $\mathcal{T} (G,M,I, \preceq)$ with $\mathcal{B}(G,M,I,\preceq)$ underlayed. Uses the order that $o_3 < o_4, o_2 < o_4$}
+  \label{fig:typical-concept-lattice}
 \end{figure}
 
-\subsection{Restriction on the order}
+\begin{theorem}
+  For a defeasible formal context $\K = (G,M,I,\preceq)$, and two typical concepts $(\minO{A}, (\minO{A})')$ and $(\minO{B}, (\minO{B})')$ where $A,B \subseteq M$, the greatest-common subconcept (gcs), $(\minO{A}, (\minO{A})') \wedge (\minO{B}, (\minO{B})')$ exists and is equal to some typical concept.
+\end{theorem}
 
-For a defeasible context $\K = (G,M,I,\preceq)$, the partial ordering is restricted to only those orders such that for any $B \subseteq M$, $\minO{B} \equiv (\minO{B})''$ we avoid the issues in \autoref{fig:hasse-diagram-defeasible-context}. We also get an improved notation for a typical concept being, for some $B\subseteq M$, $(\minO{B}, (\minO{B})')$.
+\begin{proof}
+  The gcs of two typical concepts $(\minO{A}, (\minO{A})')$ and $(\minO{B},(\minO{B})')$ is $(\minO{A} \cap \minO{B}, ((\minO{A})' \cup (\minO{B})')'')$. We need to show that $\minO{A} \cap \minO{B}$ is equivalent to $(\minO{(\minO{A} \cap \minO{B})})'$.
+
+  First we prove $\minO{A} \cap \minO{B} \subseteq \minO{((\minO{A})' \cap (\minO{B})')}$. Let $g \in \minO{A} \cap \minO{B}$, then we have that the intent $g' \supseteq (\minO{A})'$ and $g' \supseteq (\minO{B})'$. It then follows that $g' \supseteq ((\minO{A})' \cap (\minO{B})')$. Any object $h \in \minO{((\minO{A})' \cap (\minO{B})')}$
+
+  We now show that $\minO{((\minO{A})' \cap (\minO{B})')} \subseteq \minO{A} \cap \minO{B}$. Let $g \in ((\minO{A})' \cap (\minO{B})')'$. Clearly, $g' \supseteq (\minO{A})' \cap (\minO{B})'$
+
+  It is also the case that $g \in \minO{((\minO{A})' \cap (\minO{B})')}$. To see this assume $g \not \in \minO{((\minO{A})' \cap (\minO{B})')}$, then there exists $h\in \minO{((\minO{A})' \cap (\minO{B})')}$ with $h < g$. $h \in \minO{A}$
 
 
+\end{proof}
 
-\subsection{Mapping from formal concepts to typical concepts}
+\begin{proof}
 
+  We show a counter example,
 
+  The supremum of $(\{o_4\}, \{\texttt{m2, m4}\}) \wedge (\{o_2, o_3\}, \{\texttt{m2, m3}\})$ is not a typical concept; it is $(\{o_2, o_3, o_4\}, \{\texttt{m2}\})$.
+\end{proof}
+
+So, the restriction on the order gives us a meet semi-lattice.\footnote{Need to verify if we don't have the restriction on the order, do we have meet semi-lattice?}
+
+\subsection{A mapping from concepts to typical concepts}
+
+We have a surjective function mapping regular concepts to typical concepts, \[\varphi : \Kc \to \Tc\]. The function is $\varphi((A, B)) = (\minO{B}, (\minO{B})')$.
+
+\clearpage
 \bibliographystyle{IEEEtran}
 \bibliography{references}  % the name of your .bib file
 \end{document}
